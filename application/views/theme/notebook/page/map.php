@@ -107,7 +107,7 @@ $template->footer_add = "<script src='https://unpkg.com/@google/markerclustererp
 		var myLatLng = new google.maps.LatLng(lat, long);
 
 		if (theicon == '') {
-			theicon = "<?php echo base_url("images/icons/tree.png") ?>";
+			theicon = "<?php echo base_url("assets/icons/tree.png") ?>";
 		}
 
 		var marker = new google.maps.Marker({
@@ -161,10 +161,10 @@ $template->footer_add = "<script src='https://unpkg.com/@google/markerclustererp
 				if (zoom > zoomLimit) {
 					content += "<p>Kode Hantaran : " + val[2] + "</p>";
 					content += "<p>Description : " + val[3] + "</p>";
-					addPMarker(val[5], val[6], content, "<?php echo base_url("images/icons/pole.png") ?>", i);
+					addPMarker(val[5], val[6], content, "<?php echo base_url("assets/icons/pole.png") ?>", i);
 				} else {
 					content += "<p>Group Kode Hantaran : " + val[2] + "</p>";
-					addPMarker(val[5], val[6], content, "<?php echo base_url("images/icons/poles.png") ?>", i);
+					addPMarker(val[5], val[6], content, "<?php echo base_url("assets/icons/poles.png") ?>", i);
 				}
 			});
 			$("#ld4").css("display","none");
@@ -343,4 +343,5 @@ $template->footer_add = "<script src='https://unpkg.com/@google/markerclustererp
 		100% {
 			opacity: 0;
 		}
+	}
 </style>
