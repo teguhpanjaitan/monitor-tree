@@ -26,66 +26,6 @@
 	</div>
 </section>
 
-<?php
-global $template;
-$template->footer_add = "
-<script src='" . base_url("assets/notebook/") . "/js/datatables/jquery.dataTables.min.js'></script>
-
-<script>
-jQuery('#satker').dataTable({
-	'processing': true,
-	'serverSide': true,
-	'ajax': '" . base_url("ajax/act/point") . "',
-	'sDom': " . '"' . "<'row'<'col-sm-6'l><'col-sm-6'f>r>t<'row'<'col-sm-6'i><'col-sm-6'p>>" . '"' . ",
-	'sPaginationType': 'full_numbers',
-	'columnDefs': [ { targets: -1, orderable: false } ]
-});
-</script>
-";
-?>
-
-<script>
-	var temp;
-
-	function edit(id) {
-		$.ajax({
-			url: '<?php echo base_url("ajax/act/get_items") ?>',
-			dataType: 'json',
-			data: {
-				'id': id,
-				'table': 'point'
-			}
-		}).done(function(result) {
-			$("#edit_id").val(id);
-			$("#edit input[name='id_jenis_pohon']").val(result.id_jenis_pohon);
-			$("#edit input[name='segmen']").val(result.segmen);
-			$("#edit input[name='tanggal']").val(result.tanggal);
-			$("#edit input[name='tinggi_awal']").val(result.tinggi_awal);
-			$("#edit input[name='limit_tinggi']").val(result.limit_tinggi);
-			$("#edit input[name='latitude']").val(result.latitude);
-			$("#edit input[name='longitude']").val(result.longitude);
-		}).fail(function() {
-			alert("Gagal mengambil detail data satuan kerja")
-		});
-	}
-
-	function confirm_delete(id) {
-		$.ajax({
-			url: '<?php echo base_url("ajax/act/get_items") ?>',
-			dataType: 'json',
-			data: {
-				'id': id,
-				'table': 'point'
-			}
-		}).done(function(result) {
-			$("#delete_id").val(id);
-			$("#message_confirm_delete").html(result.name);
-		}).fail(function() {
-			alert("fail")
-		});
-	}
-</script>
-
 <div class="modal fade" id="new-data">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -96,7 +36,12 @@ jQuery('#satker').dataTable({
 						<form role="form" action="<?php echo base_url("point") ?>" method="post" enctype="multipart/form-data">
 							<div class="form-group">
 								<label>Nama Jenis Pohon</label>
-								<input type="text" name="id_jenis_pohon" value="" class="form-control" required>
+								<select name="id_jenis_pohon" class="form-control" required>
+									<option value="">Pilih Jenis Pohon</option>
+									<?php foreach ($jenis_pohon as $jenis) : ?>
+										<option value="<?= $jenis->id ?>"><?= $jenis->name ?></option>
+									<?php endforeach ?>
+								</select>
 							</div>
 							<div class="form-group">
 								<label>Segmen</label>
@@ -107,11 +52,11 @@ jQuery('#satker').dataTable({
 								<input type="date" name="tanggal" class="form-control" required>
 							</div>
 							<div class="form-group">
-								<label>Tinggi Pengukuran</label>
-								<input type="number" name="tinggi_awal" class="form-control" step=".01" required>
+								<label>Tinggi Pengukuran (Saat Ini) dalam Meter</label>
+								<input type="number" name="tinggi" class="form-control" step=".01" required>
 							</div>
 							<div class="form-group">
-								<label>Limit Tinggi</label>
+								<label>Limit Tinggi dalam Meter</label>
 								<input type="number" name="limit_tinggi" class="form-control" step=".01" required>
 							</div>
 							<div class="form-group">
@@ -142,10 +87,12 @@ jQuery('#satker').dataTable({
 					<div class="col-sm-12">
 						<h3 class="m-t-none m-b">Edit Point</h3>
 						<form role="form" action="<?php echo base_url("point") ?>" method="post" enctype="multipart/form-data">
-							<div class="form-group">
-								<label>Nama Jenis Pohon</label>
-								<input type="text" name="id_jenis_pohon" value="" class="form-control" required>
-							</div>
+							<select name="id_jenis_pohon" class="form-control" required>
+								<option value="">Pilih Jenis Pohon</option>
+								<?php foreach ($jenis_pohon as $jenis) : ?>
+									<option value="<?= $jenis->id ?>"><?= $jenis->name ?></option>
+								<?php endforeach ?>
+							</select>
 							<div class="form-group">
 								<label>Segmen</label>
 								<input type="text" name="segmen" value="" class="form-control" required>
@@ -155,11 +102,11 @@ jQuery('#satker').dataTable({
 								<input type="date" name="tanggal" class="form-control" required>
 							</div>
 							<div class="form-group">
-								<label>Tinggi Pengukuran</label>
-								<input type="number" name="tinggi_awal" class="form-control" step=".01" required>
+								<label>Tinggi Pengukuran (Saat Ini) dalam Meter</label>
+								<input type="number" name="tinggi" class="form-control" step=".01" required>
 							</div>
 							<div class="form-group">
-								<label>Limit Tinggi</label>
+								<label>Limit Tinggi dalam Meter</label>
 								<input type="number" name="limit_tinggi" class="form-control" step=".01" required>
 							</div>
 							<div class="form-group">
@@ -210,3 +157,70 @@ jQuery('#satker').dataTable({
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div>
+
+<?php
+global $template;
+$template->footer_add = "
+<script src='" . base_url("assets/notebook/") . "/js/datatables/jquery.dataTables.min.js'></script>
+
+<script>
+jQuery('#satker').dataTable({
+	'processing': true,
+	'serverSide': true,
+	'ajax': '" . base_url("ajax/act/point") . "',
+	'sDom': " . '"' . "<'row'<'col-sm-6'l><'col-sm-6'f>r>t<'row'<'col-sm-6'i><'col-sm-6'p>>" . '"' . ",
+	'sPaginationType': 'full_numbers',
+	'columnDefs': [ { targets: -1, orderable: false } ]
+});
+</script>
+";
+?>
+
+<script>
+	var temp;
+
+	function edit(id) {
+		$.ajax({
+			url: '<?php echo base_url("ajax/act/get_items") ?>',
+			dataType: 'json',
+			data: {
+				'id': id,
+				'table': 'point'
+			}
+		}).done(function(result) {
+			$("#edit_id").val(id);
+			$("#edit input[name='segmen']").val(result.segmen);
+			$("#edit input[name='tanggal']").val(result.tanggal);
+			$("#edit input[name='tinggi']").val(result.tinggi);
+			$("#edit input[name='limit_tinggi']").val(result.limit_tinggi);
+			$("#edit input[name='latitude']").val(result.latitude);
+			$("#edit input[name='longitude']").val(result.longitude);
+
+			$("#edit select[name='id_jenis_pohon'] option").each(function() {
+				$(this).removeAttr("selected");
+				tmp = $(this).val();
+				if (tmp == result.id_jenis_pohon) {
+					$(this).attr("selected", "selected");
+				}
+			});
+		}).fail(function() {
+			alert("Gagal mengambil detail data satuan kerja")
+		});
+	}
+
+	function confirm_delete(id) {
+		$.ajax({
+			url: '<?php echo base_url("ajax/act/get_items") ?>',
+			dataType: 'json',
+			data: {
+				'id': id,
+				'table': 'point'
+			}
+		}).done(function(result) {
+			$("#delete_id").val(id);
+			$("#message_confirm_delete").html(result.name);
+		}).fail(function() {
+			alert("fail")
+		});
+	}
+</script>

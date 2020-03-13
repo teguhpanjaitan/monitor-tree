@@ -6,7 +6,7 @@ class Point extends CI_Controller {
 	function __construct() {
         parent::__construct();
 		$this->load->model("crud");
-		$this->load->model("global_model","gm");
+		$this->load->model("treeModel","tm");
     }
 	
 	public function index()
@@ -38,6 +38,8 @@ class Point extends CI_Controller {
 			$table = $this->input->post("table");
 			$this->crud->delete_data($id,$table);
 		}
-		$template->content = $this->load->view($template->theme."page/point",null,true);
+
+		$data['jenis_pohon'] = $this->tm->get_jenis();
+		$template->content = $this->load->view($template->theme."page/point",$data,true);
 	}
 }

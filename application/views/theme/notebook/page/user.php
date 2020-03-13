@@ -69,8 +69,7 @@ $( document ).ready(function() {
 			$("#edit input[name='display_name']").val(result.display_name);
 			$("#edit input[name='username']").val(result.username);
 			$("#edit input[name='username']").attr("onblur", "check_username_not(this," + id + ")");
-
-			temp = result;
+			
 			$("#edit select[name='level'] option").each(function() {
 				$(this).removeAttr("selected");
 				tmp = $(this).val();
@@ -78,25 +77,6 @@ $( document ).ready(function() {
 					$(this).attr("selected", "selected");
 				}
 			});
-
-			$("#edit select[name='satker'] option").each(function() {
-				$(this).removeAttr("selected");
-				tmp = $(this).val();
-				if (tmp == result.satker) {
-					$(this).attr("selected", "selected");
-				}
-			});
-
-			$("#edit select[name='polda'] option").each(function() {
-				$(this).removeAttr("selected");
-				tmp = $(this).val();
-				if (tmp == result.id_polda) {
-					$(this).attr("selected", "selected");
-				}
-			});
-
-			onPoldaChange(result.id_polda);
-
 		}).fail(function() {
 			alert("Fail to get user detail")
 		});
@@ -170,25 +150,6 @@ $( document ).ready(function() {
 	function isInArray(value, array) {
 		return array.indexOf(value) > -1;
 	}
-
-	function onPoldaChange(id_polda) {
-		$.ajax({
-			url: '<?php echo base_url("ajax/act/get_dropdown") ?>',
-			dataType: 'json',
-			data: {
-				'val': id_polda,
-				'field': 'id_polda',
-				'table': 'master_polres'
-			}
-		}).done(function(result) {
-			var html = '';
-			$.each(result, function(i, item) {
-				html += '<option value="' + item.id + '">' + item.name + '</option>';
-			});
-			$("#edit select[name='polres']").removeAttr("disabled");
-			$("#edit select[name='polres']").html(html);
-		});
-	}
 </script>
 
 <div class="modal fade" id="new-data">
@@ -214,7 +175,7 @@ $( document ).ready(function() {
 							</div>
 							<div class="form-group">
 								<label>Level</label>
-								<select name="level" required>
+								<select name="level" class="form-control" required>
 									<option value="">Pilih Level</option>
 									<option value="1">Administrator</option>
 									<option value="2">User</option>
@@ -255,7 +216,7 @@ $( document ).ready(function() {
 							</div>
 							<div class="form-group">
 								<label>Level</label>
-								<select name="level" required>
+								<select name="level" class="form-control" required>
 									<option value="">Pilih Level</option>
 									<option value="1">Administrator</option>
 									<option value="2">User</option>
