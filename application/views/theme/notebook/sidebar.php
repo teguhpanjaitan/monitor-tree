@@ -34,7 +34,7 @@
 								<li <?php if(strpos($_SERVER[REQUEST_URI],'point') !== false) echo "class='active'"?>>
 									<a href="point">
 										<i class="fa fa-angle-right"></i>
-										<span>Point</span>
+										<span>Pohon</span>
 									</a>
 								</li>
 							</ul>
