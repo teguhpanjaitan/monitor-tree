@@ -22,7 +22,7 @@ class Map extends CI_Controller {
 			$this->crud->tambah_data($post,$table);
 		}
 		
-		$data = [];
+		$data['gmap_key'] = $this->config->item('google_map_key');
 		$template->content = $this->load->view($template->theme."page/map",$data,true);
 	}
 	

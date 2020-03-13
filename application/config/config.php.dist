@@ -3,6 +3,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
 |--------------------------------------------------------------------------
+| Additional config for this script
+|--------------------------------------------------------------------------
+| Below are additional config needed for this script to work properly
+|
+*/
+$config['google_map_key'] = "";
+
+/*
+|--------------------------------------------------------------------------
 | Base Site URL
 |--------------------------------------------------------------------------
 |

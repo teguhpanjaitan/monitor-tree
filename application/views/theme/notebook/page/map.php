@@ -36,7 +36,7 @@
 <?php
 global $template;
 $template->footer_add = "<script src='https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js'></script>
-<script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDees8TeKykSxaOX_gaMHg87vsLbCw4uKY&callback=initMap' async defer></script>
+<script src='https://maps.googleapis.com/maps/api/js?key=$gmap_key&callback=initMap' async defer></script>
 <script src='" . base_url("assets/notebook/") . "/js/datatables/jquery.dataTables.min.js'></script>
 ";
 ?>
