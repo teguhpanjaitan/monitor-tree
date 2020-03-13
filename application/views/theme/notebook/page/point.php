@@ -53,7 +53,7 @@
 							</div>
 							<div class="form-group">
 								<label>Tinggi Pengukuran (Saat Ini) dalam Meter</label>
-								<input type="number" name="tinggi" class="form-control" step=".01" required>
+								<input type="number" name="tinggi_awal" class="form-control" step=".01" required>
 							</div>
 							<div class="form-group">
 								<label>Limit Tinggi dalam Meter</label>
@@ -103,7 +103,7 @@
 							</div>
 							<div class="form-group">
 								<label>Tinggi Pengukuran (Saat Ini) dalam Meter</label>
-								<input type="number" name="tinggi" class="form-control" step=".01" required>
+								<input type="number" name="tinggi_awal" class="form-control" step=".01" required>
 							</div>
 							<div class="form-group">
 								<label>Limit Tinggi dalam Meter</label>
@@ -191,7 +191,7 @@ jQuery('#satker').dataTable({
 			$("#edit_id").val(id);
 			$("#edit input[name='segmen']").val(result.segmen);
 			$("#edit input[name='tanggal']").val(result.tanggal);
-			$("#edit input[name='tinggi']").val(result.tinggi);
+			$("#edit input[name='tinggi_awal']").val(result.tinggi_awal);
 			$("#edit input[name='limit_tinggi']").val(result.limit_tinggi);
 			$("#edit input[name='latitude']").val(result.latitude);
 			$("#edit input[name='longitude']").val(result.longitude);

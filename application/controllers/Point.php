@@ -22,6 +22,7 @@ class Point extends CI_Controller {
 			unset($post['act']);
 			$table = $post['table'];
 			unset($post['table']);
+			$post['tinggi'] = $this->input->post("tinggi_awal");
 			$this->crud->tambah_data($post,$table);
 		}
 		else if($act == 'edit_data')
@@ -30,6 +31,7 @@ class Point extends CI_Controller {
 			unset($post['act']);
 			$table = $post['table'];
 			unset($post['table']);
+			$post['tinggi'] = $this->input->post("tinggi_awal");
 			$this->crud->update_data($post,$table);
 		}
 		else if($act == 'delete')
