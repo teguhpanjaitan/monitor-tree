@@ -22,6 +22,7 @@ class Jenis_pohon extends CI_Controller {
 			unset($post['act']);
 			$table = $post['table'];
 			unset($post['table']);
+			$post['name'] = strtolower($post['name']);
 			$this->crud->tambah_data($post,$table);
 		}
 		else if($act == 'edit_data')
@@ -30,6 +31,7 @@ class Jenis_pohon extends CI_Controller {
 			unset($post['act']);
 			$table = $post['table'];
 			unset($post['table']);
+			$post['name'] = strtolower($post['name']);
 			$this->crud->update_data($post,$table);
 		}
 		else if($act == 'delete')

@@ -7,11 +7,50 @@
 </div>
 <section class="panel panel-default">
 	<header class="panel-heading">
-		Pilih file :
-		<input type="file" name="file" required/>
+		Import Data Pohon
 	</header>
+	<div class="table-responsive" style="padding:20px">
+		<div id="flot-placeholder" style="height:400px">
+			<div class="col-sm-10">
+				<form role="form" action="" method="post" enctype="multipart/form-data">
+					<p style="font-weight:bolder">Data yang akan di-upload adalah format csv</p>
+					<p style="font-weight:bolder">Baris pertama akan diabaikan, maka bisa dijadikan sebagai header tabel</p>
+					<p style="font-weight:bolder">Silahkan mengikuti format : "Jenis pohon";"segmen";"tanggal pengukuran";"tinggi pengukuran";"limit tinggi";"latitude";"longitude"</p>
+					<p style="font-weight:bolder"><a href="/sample.csv">Contoh file</a></p>
+					<br>
+					<div class="form-group">
+						<label>Input File</label>
+						<input type="file" name="file" class="form-control" required>
+					</div>
+					<input type="hidden" name="act" value="import"><br>
+					<button type="submit" class="btn btn-sm btn-success pull-left text-uc m-t-n-xs"><strong>Tambahkan</strong></button>
+				</form>
+				<div style="clear:both"></div>
+				<?php if (isset($errors)) : ?>
+					<br>
+					<?php if (!empty($errors)) : ?>
+						<div class="alert alert-danger">
+							<button type="button" class="close" data-dismiss="alert">×</button>
+							<i class="fa fa-ban-circle"></i>
+							<?php
+							foreach ($errors as $error) {
+								echo $error . "<br>";
+							}
+							?>
+						</div>
+					<?php else : ?>
+						<div class="alert alert-success">
+							<button type="button" class="close" data-dismiss="alert">×</button>
+							<i class="fa fa-ok-sign"></i>
+							Data berhasil di Import
+						</div>
+					<?php endif ?>
+				<?php endif ?>
+			</div>
+		</div>
+	</div>
 </section>
 
-<?php 
-global $template; 
+<?php
+global $template;
 $template->footer_add = "";
