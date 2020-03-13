@@ -27,7 +27,7 @@ class Crud extends CI_Model {
 		if(empty($post['password']))
 			unset($post['password']);
 		if(isset($post['password']))
-			$post['password'] = md5($post['password']);
+			$post['password'] = password_hash($post['password'], PASSWORD_DEFAULT);
 		
 		//check if column exist
 		$res = $this->db->query("SHOW COLUMNS FROM `$table` LIKE 'created_by'")->result_array();
@@ -76,7 +76,8 @@ class Crud extends CI_Model {
 		if(empty($post['password']))
 			unset($post['password']);
 		if(isset($post['password']))
-			$post['password'] = md5($post['password']);
+			$post['password'] = password_hash($post['password'], PASSWORD_DEFAULT);
+		
 		$date = date("Y-m-d H:i:s");
 		$uid = $this->um->get_current_uid();
 		

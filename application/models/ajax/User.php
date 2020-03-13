@@ -44,7 +44,6 @@ class User extends CI_Model {
         {
 			$pass_by['id'] = $val['ID'];
 			$pass_by['active'] = $val['active'];
-			$pass_by['confirm'] = $val['confirm'];
 			$button = $this->load->view($template->theme."button/user", $pass_by, true);
 			
             $t = array();

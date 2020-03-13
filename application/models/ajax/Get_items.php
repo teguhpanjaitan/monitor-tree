@@ -9,8 +9,10 @@ class Get_items extends CI_Model {
 		$table = $get['table'];
 		$table = $this->db->escape_str($table);
 		
-		$q = "SELECT * FROM `$table` WHERE `ID` = '$id'";
-        $res = $this->db->query($q)->result_array();
+		$this->db->select("*")
+				->from($table)
+				->where("ID",$id);
+        $res = $this->db->get()->result_array();
 
         $temp = $res[0];
         return $temp;

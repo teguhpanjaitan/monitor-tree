@@ -69,7 +69,7 @@ $( document ).ready(function() {
 			$("#edit input[name='display_name']").val(result.display_name);
 			$("#edit input[name='username']").val(result.username);
 			$("#edit input[name='username']").attr("onblur", "check_username_not(this," + id + ")");
-			
+
 			$("#edit select[name='level'] option").each(function() {
 				$(this).removeAttr("selected");
 				tmp = $(this).val();
@@ -115,7 +115,7 @@ $( document ).ready(function() {
 			} else {
 				$(obj).parent().attr("class", "form-group has-error");
 				$("#uname-error").show();
-				$("#uname-error").html("Username sudah ada");
+				$("#uname-error").html("Username sudah ada, silahkan pilih username lain");
 			}
 		}).fail(function() {
 			alert("Fail to check username.")
@@ -140,7 +140,7 @@ $( document ).ready(function() {
 			} else {
 				$(obj).parent().attr("class", "form-group has-error");
 				$("#uname-error-edit").show();
-				$("#uname-error-edit").html("Username sudah ada");
+				$("#uname-error-edit").html("Username sudah ada, silahkan pilih username lain");
 			}
 		}).fail(function() {
 			alert("Fail to check username.")
@@ -173,11 +173,11 @@ $( document ).ready(function() {
 								<label>Password</label>
 								<input type="text" name="password" class="form-control" required>
 							</div>
-							<div class="form-group">
+							<div class="form-group" style="display:none">
 								<label>Level</label>
 								<select name="level" class="form-control" required>
 									<option value="">Pilih Level</option>
-									<option value="1">Administrator</option>
+									<option value="1" selected>Administrator</option>
 									<option value="2">User</option>
 								</select>
 							</div>
@@ -214,11 +214,11 @@ $( document ).ready(function() {
 								<label>Password Baru</label>
 								<input type="text" name="password" class="form-control">
 							</div>
-							<div class="form-group">
+							<div class="form-group" style="display:none">
 								<label>Level</label>
 								<select name="level" class="form-control" required>
 									<option value="">Pilih Level</option>
-									<option value="1">Administrator</option>
+									<option value="1" selected>Administrator</option>
 									<option value="2">User</option>
 								</select>
 							</div>
@@ -241,12 +241,12 @@ $( document ).ready(function() {
 			<form role="form" method="post" action="<?php echo base_url("user") ?>" class="form-horizontal">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title">Hapus User</h4>
+					<h4 class="modal-title">Nonaktikan User</h4>
 				</div>
 				<div class="modal-body">
 					<div class="row" style="padding:10px">
 						<div class="col-sm-12">
-							<p>Apakah yakin ingin menghapus <b id="message_confirm_delete"></b> ?</p>
+							<p>Apakah yakin ingin menonaktifkan user <b id="message_confirm_delete"></b> ?</p>
 							<input type="hidden" id="delete_id" name="ID" value="users">
 							<input type="hidden" name="id" value="">
 							<input type="hidden" name="table" value="users">
@@ -255,7 +255,7 @@ $( document ).ready(function() {
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn btn-sm btn-danger pull-right text-uc m-t-n-xs"><strong>Hapus</strong></button>
+					<button type="submit" class="btn btn-sm btn-danger pull-right text-uc m-t-n-xs"><strong>Konfirmasi</strong></button>
 					<button type="button" style="margin-right:10px" onclick='$("#confirm-delete").modal("hide");' class="btn btn-sm btn-warning pull-right text-uc m-t-n-xs"><strong>Batal</strong></button>
 				</div>
 			</form>

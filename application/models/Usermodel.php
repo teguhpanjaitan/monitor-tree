@@ -15,7 +15,7 @@ class UserModel extends CI_Model {
 
 		if(!empty($post['new_password']))
 		{
-			$data = array("password" => md5($post['new_password']));
+			$data = array("password" => password_hash($post['new_password'], PASSWORD_DEFAULT));
 		
 			$this->db->where("ID = '$id'");
 			$this->db->update('user',$data);
@@ -36,9 +36,13 @@ class UserModel extends CI_Model {
 		$tmp = json_decode($credential);
 		$username = $tmp->username;
 		$pass = $tmp->password;
-        
-		$q = "SELECT ID FROM `user` WHERE `username` = '$username' and `password` = '$pass'";
-		$res = $this->db->query($q)->result_array();
+		
+		$this->db->select("ID")
+				->from('users')
+				->where("username",$username)
+				->where("password",$pass);
+		$res = $this->db->get()->result_array();
+
 		return $res[0]['ID'];
 	}
 	
