@@ -63,7 +63,7 @@ CREATE TABLE `jenis_pohon` (
 
 LOCK TABLES `jenis_pohon` WRITE;
 /*!40000 ALTER TABLE `jenis_pohon` DISABLE KEYS */;
-INSERT INTO `jenis_pohon` VALUES (1,'Akasia',0.3,0),(2,'sdfsd',3,0),(3,'sdfsd',2,1);
+INSERT INTO `jenis_pohon` VALUES (1,'Akasia',0.3,0),(2,'sdfsd',3,1),(3,'86jjj',2,0);
 /*!40000 ALTER TABLE `jenis_pohon` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -75,8 +75,9 @@ DROP TABLE IF EXISTS `point`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `point` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `id` int(10) NOT NULL DEFAULT '20',
   `id_jenis_pohon` int(10) NOT NULL,
+  `segmen` varchar(20) DEFAULT NULL,
   `tanggal` date NOT NULL,
   `tinggi_awal` double NOT NULL DEFAULT '0',
   `tinggi` float NOT NULL DEFAULT '0',
@@ -85,7 +86,7 @@ CREATE TABLE `point` (
   `longitude` double NOT NULL DEFAULT '0',
   `deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -94,8 +95,35 @@ CREATE TABLE `point` (
 
 LOCK TABLES `point` WRITE;
 /*!40000 ALTER TABLE `point` DISABLE KEYS */;
-INSERT INTO `point` VALUES (1,1,'2019-12-06',1,2,5,0.671621276,99.704031779,0),(7,1,'2019-12-06',3.1,3.9,5,0.671492539,99.704139067,0),(8,1,'2019-12-02',10,0,30,0.02334,92.21321,0);
+INSERT INTO `point` VALUES (1,1,NULL,'2019-12-06',1,2,5,0.671621276,99.704031779,0),(7,1,NULL,'2019-12-06',3.1,3.9,5,0.671492539,99.704139067,0);
 /*!40000 ALTER TABLE `point` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tiang`
+--
+
+DROP TABLE IF EXISTS `tiang`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tiang` (
+  `id` bigint(10) NOT NULL,
+  `kode_hantaran` varchar(255) DEFAULT NULL,
+  `deskripsi` varchar(255) DEFAULT NULL,
+  `longitude` float DEFAULT NULL,
+  `latitude` float DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tiang`
+--
+
+LOCK TABLES `tiang` WRITE;
+/*!40000 ALTER TABLE `tiang` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tiang` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -113,7 +141,7 @@ CREATE TABLE `users` (
   `level` tinyint(1) DEFAULT '2',
   `active` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -122,7 +150,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Teguh putra utama ST','teguh','098f6bcd4621d373cade4e832627b4f6',1,1),(7,'Teguh3','teguh3','f326636a85cbb7b7959234dd0feac399',2,1);
+INSERT INTO `users` VALUES (1,'Teguh putra utama ST','teguh','098f6bcd4621d373cade4e832627b4f6',1,1),(7,'Teguh3','teguh3','f326636a85cbb7b7959234dd0feac399',2,1),(10,'tamapnj','tamapnj','5ad811b9cf131e626e0ea11d0235241a',1,1),(11,'tamapnj2','tamapnj2','0d51daf7c8d392c6faf951a505af96d8',2,0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -135,4 +163,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-03 18:03:38
+-- Dump completed on 2020-03-13 11:50:19

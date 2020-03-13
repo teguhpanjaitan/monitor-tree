@@ -54,6 +54,7 @@ class Point extends CI_Model {
             $t = array();
             $t[] = $start_no;
             $t[] = $val['nama_jenis_pohon'];
+            $t[] = $val['segmen'];
             $t[] = $val['tinggi'];
             $t[] = $val['limit_tinggi'];
             $t[] = "{$val['latitude']},{$val['longitude']}";

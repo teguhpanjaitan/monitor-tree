@@ -15,6 +15,7 @@
 				<tr>
 					<th width="7%">No</th>
 					<th width="20%">Jenis Pohon</th>
+					<th width="20%">Segmen</th>
 					<th width="20%">Prediksi Tinggi (m)</th>
 					<th width="15%">Limit Tinggi (m)</th>
 					<th width="20%">Posisi</th>
@@ -57,6 +58,7 @@ jQuery('#satker').dataTable({
 		}).done(function(result) {
 			$("#edit_id").val(id);
 			$("#edit input[name='id_jenis_pohon']").val(result.id_jenis_pohon);
+			$("#edit input[name='segmen']").val(result.segmen);
 			$("#edit input[name='tanggal']").val(result.tanggal);
 			$("#edit input[name='tinggi_awal']").val(result.tinggi_awal);
 			$("#edit input[name='limit_tinggi']").val(result.limit_tinggi);
@@ -94,7 +96,11 @@ jQuery('#satker').dataTable({
 						<form role="form" action="<?php echo base_url("point") ?>" method="post" enctype="multipart/form-data">
 							<div class="form-group">
 								<label>Nama Jenis Pohon</label>
-								<input type="text" name="id_jenis_pohon" value="1" class="form-control" required>
+								<input type="text" name="id_jenis_pohon" value="" class="form-control" required>
+							</div>
+							<div class="form-group">
+								<label>Segmen</label>
+								<input type="text" name="segmen" value="" class="form-control" required>
 							</div>
 							<div class="form-group">
 								<label>Tanggal Pengukuran</label>
@@ -103,10 +109,6 @@ jQuery('#satker').dataTable({
 							<div class="form-group">
 								<label>Tinggi Pengukuran</label>
 								<input type="number" name="tinggi_awal" class="form-control" step=".01" required>
-							</div>
-							<div class="form-group">
-								<label>Tinggi Saat Ini</label>
-								<input type="number" name="tinggi" class="form-control" step=".01">
 							</div>
 							<div class="form-group">
 								<label>Limit Tinggi</label>
@@ -142,7 +144,11 @@ jQuery('#satker').dataTable({
 						<form role="form" action="<?php echo base_url("point") ?>" method="post" enctype="multipart/form-data">
 							<div class="form-group">
 								<label>Nama Jenis Pohon</label>
-								<input type="text" name="id_jenis_pohon" value="1" class="form-control" required>
+								<input type="text" name="id_jenis_pohon" value="" class="form-control" required>
+							</div>
+							<div class="form-group">
+								<label>Segmen</label>
+								<input type="text" name="segmen" value="" class="form-control" required>
 							</div>
 							<div class="form-group">
 								<label>Tanggal Pengukuran</label>
@@ -151,10 +157,6 @@ jQuery('#satker').dataTable({
 							<div class="form-group">
 								<label>Tinggi Pengukuran</label>
 								<input type="number" name="tinggi_awal" class="form-control" step=".01" required>
-							</div>
-							<div class="form-group">
-								<label>Tinggi Saat Ini</label>
-								<input type="number" name="tinggi" class="form-control" step=".01">
 							</div>
 							<div class="form-group">
 								<label>Limit Tinggi</label>
