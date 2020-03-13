@@ -61,7 +61,6 @@ class User extends CI_Controller {
 			$this->db->update("users",$data);
 		}
 		$data['levels'] = $this->gm->get_all_data("desc_level");
-		$data['satker'] = $this->gm->get_all_data("master_satker");
 		$template->content = $this->load->view($template->theme."page/user",$data,true);
 	}
 }

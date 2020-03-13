@@ -9,23 +9,6 @@ class Global_model extends CI_Model {
 		$this->db->update($table,$data);
 	}
 	
-	public function get_class_access($uid = ''){
-		$this->db->select("cl.name as class_name")
-				->from("class_user_access as ca")
-				->join("class_list as cl","cl.ID = ca.id_class","left")
-				->where("ca.id_user = '$uid' AND ca.deleted = '0'");
-		$ret = $this->db->get()->result_array();
-		if(count($ret) == 0)
-			return false;
-		
-		$tmp = array();
-		foreach($ret as $val)
-		{
-			$tmp[] = $val['class_name'];
-		}
-		return $tmp;
-	}
-	
 	public function get_all_data($table)
 	{
 
