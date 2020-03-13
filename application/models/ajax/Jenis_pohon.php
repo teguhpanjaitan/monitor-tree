@@ -40,7 +40,6 @@ class Jenis_pohon extends CI_Model {
 		
         $tot = $this->db->get()->result_array();
 
-		$start_no = intval($start) + 1;
         $temp = array();
         foreach($res as $val)
         {
@@ -48,12 +47,11 @@ class Jenis_pohon extends CI_Model {
 			$button = $this->load->view($template->theme."button/default", $pass_by, true);
 			
             $t = array();
-            $t[] = $start_no;
+            $t[] = $val['id'];
             $t[] = $val['name'];
             $t[] = $val['meter_per_month'];
             $t[] = $button;
             $temp[] = $t;
-			$start_no++;
         }
         $data = array("draw"=>$get["draw"],"recordsTotal"=>$tot[0]['total'],"recordsFiltered"=>$tot[0]['total'],"data"=>$temp);
         return $data;

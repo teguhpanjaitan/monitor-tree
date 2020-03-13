@@ -13,7 +13,7 @@
 		<table id="satker" class="table table-striped b-t b-light" data-ride="datatables">
 			<thead>
 				<tr>
-					<th width="10%">No</th>
+					<th width="10%">ID</th>
 					<th width="20%">Nama</th>
 					<th width="20%">Meter / Month</th>
 					<th width="10%"></th>
