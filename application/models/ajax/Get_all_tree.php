@@ -18,6 +18,7 @@ class Get_all_tree extends CI_Model
 			$temp['longitude'] = $val['longitude'];
 			$temp['jenis_pohon'] = $val['jenis_pohon'];
 			$temp['tinggi'] = $val['tinggi'];
+			$temp['limit_tinggi'] = $val['limit_tinggi'];
 			$ret[$key] = $temp;
 		}
 		return $ret;

@@ -2,7 +2,12 @@
 
 class Tiang extends CI_Model
 {
-
+    function __construct()
+	{
+		parent::__construct();
+		$this->load->model("treeModel","dm");
+    }
+    
     public function exec()
     {
         $zoom = intval($_GET['zoom']);
@@ -13,6 +18,12 @@ class Tiang extends CI_Model
 
         $file = fopen("tiang.csv", "r");
         fgetcsv($file); //ignore first line
+
+        $segment_alerts = [];
+        $pohon_alert = $this->dm->get_pohon_alert();
+        foreach($pohon_alert as $pohon){
+            $segment_alerts[strtolower($pohon['segmen'])][] = $pohon;
+        }
 
         if ($zoom == 0) {
             $final = [];
@@ -26,7 +37,14 @@ class Tiang extends CI_Model
                 if (!empty($data[2])) {
                     if ($data[2] != $hantaranOld) {
                         if ($c != 0) {
-                            $targetKey = $c - round($b/2);
+                            $targetKey = $c - round($b / 2);
+
+                            if(!empty($segment_alerts[strtolower($temp[$targetKey][2])])){
+                                $temp[$targetKey][count($temp[$targetKey])] = true;
+                            }
+                            else{
+                                $temp[$targetKey][count($temp[$targetKey])] = false;
+                            }
                             $final[] = $temp[$targetKey];
                             $b = 0;
                         }
@@ -55,6 +73,13 @@ class Tiang extends CI_Model
                 //latitude part
                 if ($data[5] >= $southWest[0] && $data[5] <= $northeEast[0]) {
                     if ($data[6] >= $southWest[1] && $data[6] <= $northeEast[1]) {
+                        if(!empty($segment_alerts[strtolower($data[2])])){
+                            $data[count($data)] = true;
+                        }
+                        else{
+                            $data[count($data)] = false;
+                        }
+
                         $final[] = $data;
                     }
                 }

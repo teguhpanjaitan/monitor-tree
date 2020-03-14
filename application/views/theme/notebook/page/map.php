@@ -143,7 +143,7 @@ $template->footer_add = "<script src='https://unpkg.com/@google/markerclustererp
 		}
 		var content = "";
 
-		$("#ld4").css("display","flex");
+		$("#ld4").css("display", "flex");
 
 		$.ajax({
 			url: '<?php echo base_url("ajax/act/tiang/") ?>',
@@ -164,13 +164,17 @@ $template->footer_add = "<script src='https://unpkg.com/@google/markerclustererp
 					addPMarker(val[5], val[6], content, "<?php echo base_url("assets/icons/pole.png") ?>", i);
 				} else {
 					content += "<p>Group Kode Hantaran : " + val[2] + "</p>";
-					addPMarker(val[5], val[6], content, "<?php echo base_url("assets/icons/poles.png") ?>", i);
+					if (val[7] == true) {
+						addPMarker(val[5], val[6], content, "<?php echo base_url("assets/icons/poles-red.png") ?>", i);
+					} else {
+						addPMarker(val[5], val[6], content, "<?php echo base_url("assets/icons/poles.png") ?>", i);
+					}
 				}
 			});
-			$("#ld4").css("display","none");
+			$("#ld4").css("display", "none");
 		}).fail(function() {
 			//fail function
-			$("#ld4").css("display","none");
+			$("#ld4").css("display", "none");
 		});
 	}
 
@@ -205,7 +209,11 @@ $template->footer_add = "<script src='https://unpkg.com/@google/markerclustererp
 				content = "<p>Pohon " + val.jenis_pohon + "</p>";
 				content += "<p>Prediksi tinggi : " + val.tinggi + " m </p>";
 				content += "<p>Posisi : " + val.latitude + "," + val.longitude + " </p>";
-				addPMarker(val.latitude, val.longitude, content, '', i);
+				if (val.tinggi >= val.limit_tinggi) {
+					addPMarker(val.latitude, val.longitude, content, "<?php echo base_url("assets/icons/tree-red.png") ?>", i);
+				} else {
+					addPMarker(val.latitude, val.longitude, content, '', i);
+				}
 			});
 		}).fail(function() {
 			//fail function
