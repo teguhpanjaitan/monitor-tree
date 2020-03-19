@@ -59,11 +59,12 @@ class Crud extends CI_Model
 			//if file name is icon
 			if ($i == 'image') {
 				if (!empty($val['name'])) {
-					$target_file = FCPATH . "images/" . $val['name'];
+					$file_name = str_replace(" ","-",$val['name']);
+					$target_file = FCPATH . "images/" . $file_name;
 					if (!file_exists($target_file))
 						move_uploaded_file($val["tmp_name"], $target_file);
 					$this->db->where("id", $last_id);
-					$this->db->update($table, array("image" => $val['name']));
+					$this->db->update($table, array("image" => $file_name));
 				}
 			}
 		}
@@ -110,12 +111,13 @@ class Crud extends CI_Model
 						unlink(FCPATH . "images/" . $result[0]['image']);
 					}
 
-					$target_file = FCPATH . "images/" . $val['name'];
+					$file_name = str_replace(" ","-",$val['name']);
+					$target_file = FCPATH . "images/" . $file_name;
 					if (!file_exists($target_file)) {
 						move_uploaded_file($val["tmp_name"], $target_file);
 					}
 					$this->db->where("id", $id);
-					$this->db->update($table, array("image" => $val['name']));
+					$this->db->update($table, array("image" => $file_name));
 				}
 			}
 		}
