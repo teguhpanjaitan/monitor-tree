@@ -207,8 +207,14 @@ $template->footer_add = "<script src='https://unpkg.com/@google/markerclustererp
 			$.each(result, function(i, val) {
 				content = "";
 				content = "<p>Pohon " + val.jenis_pohon + "</p>";
+				content += "<p>Kode Hantaran : " + val.segmen + "</p>";
 				content += "<p>Prediksi tinggi : " + val.tinggi + " m </p>";
 				content += "<p>Posisi : " + val.latitude + "," + val.longitude + " </p>";
+
+				if (val.image !== "") {
+					content += "<a href='images/" + val.image + "' target='_blank'><img style='max-height:250px' src='images/" + val.image + "'/></a>";
+				}
+
 				if (val.tinggi >= val.limit_tinggi) {
 					addPMarker(val.latitude, val.longitude, content, "<?php echo base_url("assets/icons/tree-red.png") ?>", i);
 				} else {

@@ -13,13 +13,14 @@
 		<table id="satker" class="table table-striped b-t b-light" data-ride="datatables">
 			<thead>
 				<tr>
-					<th width="7%">No</th>
-					<th width="20%">Jenis Pohon</th>
-					<th width="20%">Segmen</th>
-					<th width="20%">Prediksi Tinggi (m)</th>
-					<th width="15%">Limit Tinggi (m)</th>
-					<th width="20%">Posisi</th>
-					<th width="18%"></th>
+					<th style="min-width:60px">No</th>
+					<th style="min-width:120px">Jenis Pohon</th>
+					<th style="min-width:150px">Segmen</th>
+					<th style="min-width:85px">Tinggi</th>
+					<th style="min-width:120px">Limit Tinggi</th>
+					<th style="min-width:150px">Posisi</th>
+					<th style="min-width:100px">Gambar</th>
+					<th style="min-width:100px"></th>
 				</tr>
 			</thead>
 		</table>
@@ -66,6 +67,10 @@
 							<div class="form-group">
 								<label>Longitude</label>
 								<input type="number" name="longitude" class="form-control" step=".000000001" required>
+							</div>
+							<div class="form-group">
+								<label>Foto</label>
+								<input type="file" name="image" class="form-control">
 							</div>
 							<input type="hidden" name="table" value="point">
 							<input type="hidden" name="act" value="tambah_data">
@@ -116,6 +121,10 @@
 							<div class="form-group">
 								<label>Longitude</label>
 								<input type="number" name="longitude" class="form-control" step=".000000001" required>
+							</div>
+							<div class="form-group">
+								<label>Foto</label>
+								<input type="file" name="image" class="form-control">
 							</div>
 							<input type="hidden" id="edit_id" name="ID">
 							<input type="hidden" name="table" value="point">
@@ -204,7 +213,7 @@ jQuery('#satker').dataTable({
 				}
 			});
 		}).fail(function() {
-			alert("Gagal mengambil detail data satuan kerja")
+			alert("Gagal mengambil detail data")
 		});
 	}
 
@@ -224,3 +233,9 @@ jQuery('#satker').dataTable({
 		});
 	}
 </script>
+
+<style>
+	.table img.image{
+		max-width: 150px;
+	}
+</style>
