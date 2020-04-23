@@ -86,11 +86,13 @@ $template->footer_add = "<script src='https://unpkg.com/@google/markerclustererp
 		trafficLayer.setMap(map);
 		load_all_tiangs();
 		load_all_tree();
+		showCurrentLocation();
 
 		map.addListener('zoom_changed', function() {
 			clearMapMarkers();
 			load_all_tiangs();
 			load_all_tree();
+			showCurrentLocation();
 		});
 
 		map.addListener('dragend', function() {
@@ -99,11 +101,12 @@ $template->footer_add = "<script src='https://unpkg.com/@google/markerclustererp
 				clearMapMarkers();
 				load_all_tiangs();
 				load_all_tree();
+				showCurrentLocation();
 			}
 		});
 	}
 
-	function addPMarker(lat, long, contentString, theicon, i, tiang = true) {
+	function addPMarker(lat, long, contentString, theicon, tiang = true) {
 		var myLatLng = new google.maps.LatLng(lat, long);
 
 		if (theicon == '') {
@@ -117,13 +120,15 @@ $template->footer_add = "<script src='https://unpkg.com/@google/markerclustererp
 			icon: theicon
 		});
 
-		var infowindow = new google.maps.InfoWindow({
-			content: contentString
-		});
+		if (contentString !== '') {
+			var infowindow = new google.maps.InfoWindow({
+				content: contentString
+			});
 
-		marker.addListener('click', function() {
-			infowindow.open(map, marker);
-		});
+			marker.addListener('click', function() {
+				infowindow.open(map, marker);
+			});
+		}
 
 		if (tiang) {
 			tiangMarkers.push(marker);
@@ -161,13 +166,13 @@ $template->footer_add = "<script src='https://unpkg.com/@google/markerclustererp
 				if (zoom > zoomLimit) {
 					content += "<p>Kode Hantaran : " + val[2] + "</p>";
 					content += "<p>Description : " + val[3] + "</p>";
-					addPMarker(val[5], val[6], content, "<?php echo base_url("assets/icons/pole.png") ?>", i);
+					addPMarker(val[5], val[6], content, "<?php echo base_url("assets/icons/pole.png") ?>");
 				} else {
 					content += "<p>Group Kode Hantaran : " + val[2] + "</p>";
 					if (val[7] == true) {
-						addPMarker(val[5], val[6], content, "<?php echo base_url("assets/icons/poles-red.png") ?>", i);
+						addPMarker(val[5], val[6], content, "<?php echo base_url("assets/icons/poles-red.png") ?>");
 					} else {
-						addPMarker(val[5], val[6], content, "<?php echo base_url("assets/icons/poles.png") ?>", i);
+						addPMarker(val[5], val[6], content, "<?php echo base_url("assets/icons/poles.png") ?>");
 					}
 				}
 			});
@@ -216,9 +221,9 @@ $template->footer_add = "<script src='https://unpkg.com/@google/markerclustererp
 				}
 
 				if (val.tinggi >= val.limit_tinggi) {
-					addPMarker(val.latitude, val.longitude, content, "<?php echo base_url("assets/icons/tree-red.png") ?>", i);
+					addPMarker(val.latitude, val.longitude, content, "<?php echo base_url("assets/icons/tree-red.png") ?>");
 				} else {
-					addPMarker(val.latitude, val.longitude, content, '', i);
+					addPMarker(val.latitude, val.longitude, content, '');
 				}
 			});
 		}).fail(function() {
@@ -237,6 +242,20 @@ $template->footer_add = "<script src='https://unpkg.com/@google/markerclustererp
 
 		tiangMarkers = [];
 		treeMarkers = [];
+	}
+
+	function showCurrentLocation() {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(showPosition);
+		} else {
+			console.log("GPS feature not available");
+		}
+	}
+
+	function showPosition(position) {
+		var lat = position.coords.latitude;
+		var lng = position.coords.longitude;
+		addPMarker(lat, lng, 'Lokasi Anda Saat Ini', "<?php echo base_url("assets/icons/person.png") ?>");
 	}
 
 	function timeConverter(UNIX_timestamp) {
