@@ -17,7 +17,6 @@
 					<th style="min-width:120px">Jenis Pohon</th>
 					<th style="min-width:150px">Segmen</th>
 					<th style="min-width:85px">Tinggi</th>
-					<th style="min-width:120px">Limit Tinggi</th>
 					<th style="min-width:150px">Posisi</th>
 					<th style="min-width:100px">Gambar</th>
 					<th style="min-width:100px"></th>
@@ -45,28 +44,32 @@
 								</select>
 							</div>
 							<div class="form-group">
-								<label>Segmen</label>
-								<input type="text" name="segmen" value="" class="form-control" required>
-							</div>
-							<div class="form-group">
 								<label>Tanggal Pengukuran</label>
 								<input type="date" name="tanggal" class="form-control" required>
 							</div>
 							<div class="form-group">
-								<label>Tinggi Pengukuran (Saat Ini) dalam Meter</label>
+								<label>Tinggi Pengukuran Saat Ini (M)</label>
 								<input type="number" name="tinggi_awal" class="form-control" step=".01" required>
 							</div>
 							<div class="form-group">
-								<label>Limit Tinggi dalam Meter</label>
-								<input type="number" name="limit_tinggi" class="form-control" step=".01" required>
+								<label>Tiang 1</label>
+								<!-- <input type="number" name="latitude" class="form-control" step=".000000001" required> -->
+								<select id="new-tiang1" name="tiang1" style="width:260px" required>
+									<option value="">&nbsp;</option>
+									<?php foreach ($tiangs as $tiang) : ?>
+										<option value="<?= $tiang['nama'] ?>"><?= $tiang['nama'] ?></option>
+									<?php endforeach; ?>
+								</select>
 							</div>
 							<div class="form-group">
-								<label>Latitude</label>
-								<input type="number" name="latitude" class="form-control" step=".000000001" required>
-							</div>
-							<div class="form-group">
-								<label>Longitude</label>
-								<input type="number" name="longitude" class="form-control" step=".000000001" required>
+								<label>Tiang 2</label>
+								<!-- <input type="number" name="longitude" class="form-control" step=".000000001" required> -->
+								<select id="new-tiang2" name="tiang2" style="width:260px" required>
+									<option value="">&nbsp;</option>
+									<?php foreach ($tiangs as $tiang) : ?>
+										<option value="<?= $tiang['nama'] ?>"><?= $tiang['nama'] ?></option>
+									<?php endforeach; ?>
+								</select>
 							</div>
 							<div class="form-group">
 								<label>Foto</label>
@@ -99,28 +102,32 @@
 								<?php endforeach ?>
 							</select>
 							<div class="form-group">
-								<label>Segmen</label>
-								<input type="text" name="segmen" value="" class="form-control" required>
-							</div>
-							<div class="form-group">
 								<label>Tanggal Pengukuran</label>
 								<input type="date" name="tanggal" class="form-control" required>
 							</div>
 							<div class="form-group">
-								<label>Tinggi Pengukuran (Saat Ini) dalam Meter</label>
+								<label>Tinggi Pengukuran Saat Ini (M)</label>
 								<input type="number" name="tinggi_awal" class="form-control" step=".01" required>
 							</div>
 							<div class="form-group">
-								<label>Limit Tinggi dalam Meter</label>
-								<input type="number" name="limit_tinggi" class="form-control" step=".01" required>
+								<label>Tiang 1</label>
+								<!-- <input type="number" name="latitude" class="form-control" step=".000000001" required> -->
+								<select id="edit-tiang1" name="tiang1" style="width:260px" required>
+									<option value="">&nbsp;</option>
+									<?php foreach ($tiangs as $tiang) : ?>
+										<option value="<?= $tiang['nama'] ?>"><?= $tiang['nama'] ?></option>
+									<?php endforeach; ?>
+								</select>
 							</div>
 							<div class="form-group">
-								<label>Latitude</label>
-								<input type="number" name="latitude" class="form-control" step=".000000001" required>
-							</div>
-							<div class="form-group">
-								<label>Longitude</label>
-								<input type="number" name="longitude" class="form-control" step=".000000001" required>
+								<label>Tiang 2</label>
+								<!-- <input type="number" name="longitude" class="form-control" step=".000000001" required> -->
+								<select id="edit-tiang2" name="tiang2" style="width:260px" required>
+									<option value="">&nbsp;</option>
+									<?php foreach ($tiangs as $tiang) : ?>
+										<option value="<?= $tiang['nama'] ?>"><?= $tiang['nama'] ?></option>
+									<?php endforeach; ?>
+								</select>
 							</div>
 							<div class="form-group">
 								<label>Foto</label>
@@ -171,8 +178,24 @@
 global $template;
 $template->footer_add = "
 <script src='" . base_url("assets/notebook/") . "/js/datatables/jquery.dataTables.min.js'></script>
+<script src='" . base_url("assets/notebook/") . "/js/select2/select2.min.js'></script>
 
 <script>
+$( document ).ready(function() {
+	$('#new-tiang1').select2({
+		minimumInputLength: 5,
+	});
+	$('#new-tiang2').select2({
+		minimumInputLength: 5,
+	});
+	$('#edit-tiang1').select2({
+		minimumInputLength: 5,
+	});
+	$('#edit-tiang2').select2({
+		minimumInputLength: 5,
+	});
+});
+
 jQuery('#satker').dataTable({
 	'processing': true,
 	'serverSide': true,
@@ -235,7 +258,7 @@ jQuery('#satker').dataTable({
 </script>
 
 <style>
-	.table img.image{
+	.table img.image {
 		max-width: 150px;
 	}
 </style>

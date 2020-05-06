@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="<?php echo base_url("assets/notebook/") ?>/js/datatables/datatables.css" type="text/css" />
   <link rel="stylesheet" href="<?php echo base_url("assets/notebook/") ?>/js/datepicker/datepicker.css" type="text/css" />
   <link rel="stylesheet" href="<?php echo base_url("assets/custom.css") ?>" type="text/css" />
+  <link rel="stylesheet" href="<?php echo base_url("assets/notebook/") ?>/js/select2/select2.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="<?php echo base_url("assets/notebook/") ?>/js/ie/html5shiv.js"></script>
     <script src="<?php echo base_url("assets/notebook/") ?>/js/ie/respond.min.js"></script>
