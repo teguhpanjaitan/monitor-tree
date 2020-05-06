@@ -45,7 +45,7 @@ class Point extends CI_Controller
 			$temp = $this->get_pohon_position($tiang1, $tiang2);
 			$post['latitude'] = $temp['latitude'];
 			$post['longitude'] = $temp['longitude'];
-			$post['segment'] = $this->get_tiang_segmen($tiang1);
+			$post['segmen'] = $this->get_tiang_segmen($tiang1);
 
 			$this->crud->update_data($post, $table);
 		} else if ($act == 'delete') {

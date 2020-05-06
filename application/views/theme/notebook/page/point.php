@@ -230,12 +230,15 @@ jQuery('#satker').dataTable({
 			}
 		}).done(function(result) {
 			$("#edit_id").val(id);
-			$("#edit input[name='segmen']").val(result.segmen);
 			$("#edit input[name='tanggal']").val(result.tanggal);
 			$("#edit input[name='tinggi_awal']").val(result.tinggi_awal);
-			$("#edit input[name='limit_tinggi']").val(result.limit_tinggi);
-			$("#edit input[name='latitude']").val(result.latitude);
-			$("#edit input[name='longitude']").val(result.longitude);
+
+			$("#edit-tiang1").val(result.tiang1);
+			$("#edit-tiang2").val(result.tiang2);
+			$("#edit-tiang1").trigger('change');
+			$("#edit-tiang2").trigger('change');
+
+			$("#edit textarea[name='keterangan']").val(result.keterangan);
 
 			$("#edit select[name='id_jenis_pohon'] option").each(function() {
 				$(this).removeAttr("selected");
