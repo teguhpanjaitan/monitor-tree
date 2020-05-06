@@ -65,7 +65,8 @@ class Point extends CI_Model
             $t[] = $val['nama_jenis_pohon'];
             $t[] = $val['segmen'];
             $t[] = $val['tinggi'] . " m";
-            $t[] = "Lat: {$val['latitude']}<br> Lng: {$val['longitude']}";
+            $t[] = "Tiang 1: {$val['tiang1']}<br> Tiang 2: {$val['tiang2']}";
+            $t[] = $val['keterangan'];
             $t[] = !empty($val['image'])?"<a href='images/{$val['image']}' target='_blank'><img class='image' src='images/{$val['image']}' /></a>":"";
             $t[] = $button;
             $temp[] = $t;

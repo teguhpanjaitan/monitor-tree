@@ -17,7 +17,8 @@
 					<th style="min-width:120px">Jenis Pohon</th>
 					<th style="min-width:150px">Segmen</th>
 					<th style="min-width:85px">Tinggi</th>
-					<th style="min-width:150px">Posisi</th>
+					<th style="min-width:85px">Posisi</th>
+					<th style="min-width:150px">Keterangan</th>
 					<th style="min-width:100px">Gambar</th>
 					<th style="min-width:100px"></th>
 				</tr>
@@ -70,6 +71,10 @@
 										<option value="<?= $tiang['nama'] ?>"><?= $tiang['nama'] ?></option>
 									<?php endforeach; ?>
 								</select>
+							</div>
+							<div class="form-group">
+								<label>Keterangan Tambahan</label>
+								<textarea class="form-control" name="keterangan"></textarea>
 							</div>
 							<div class="form-group">
 								<label>Foto</label>
@@ -128,6 +133,10 @@
 										<option value="<?= $tiang['nama'] ?>"><?= $tiang['nama'] ?></option>
 									<?php endforeach; ?>
 								</select>
+							</div>
+							<div class="form-group">
+								<label>Keterangan Tambahan</label>
+								<textarea class="form-control" name="keterangan"></textarea>
 							</div>
 							<div class="form-group">
 								<label>Foto</label>

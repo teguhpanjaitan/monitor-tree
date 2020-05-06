@@ -84,6 +84,9 @@ CREATE TABLE `point` (
   `limit_tinggi` float NOT NULL DEFAULT '0',
   `latitude` double NOT NULL DEFAULT '0',
   `longitude` double NOT NULL DEFAULT '0',
+  `tiang1` varchar(255) DEFAULT '',
+  `tiang2` varchar(255) DEFAULT '',
+  `keterangan` VARCHAR(1020) DEFAULT '',
   `image` varchar(255) DEFAULT '',
   `deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)

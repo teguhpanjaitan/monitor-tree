@@ -31,8 +31,6 @@ class Point extends CI_Controller
 			$post['latitude'] = $temp['latitude'];
 			$post['longitude'] = $temp['longitude'];
 			$post['segmen'] = $this->get_tiang_segmen($tiang1);
-			unset($post['tiang1']);
-			unset($post['tiang2']);
 
 			$this->crud->tambah_data($post, $table);
 		} else if ($act == 'edit_data') {
@@ -48,8 +46,6 @@ class Point extends CI_Controller
 			$post['latitude'] = $temp['latitude'];
 			$post['longitude'] = $temp['longitude'];
 			$post['segment'] = $this->get_tiang_segmen($tiang1);
-			unset($post['tiang1']);
-			unset($post['tiang2']);
 
 			$this->crud->update_data($post, $table);
 		} else if ($act == 'delete') {
