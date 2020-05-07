@@ -21,10 +21,12 @@ class Point extends CI_Model
 
         if ($col == "0") $col = "id";
         else if ($col == "1") $col = "nama_jenis_pohon";
-        else if ($col == "2") $col = "tinggi";
-        else if ($col == "3") $col = "limit_tinggi";
+        else if ($col == "2") $col = "segmen";
+        else if ($col == "3") $col = "tinggi";
         else if ($col == "4") $col = "";
-        else if ($col == "5") $col = "";
+        else if ($col == "5") $col = "keterangan";
+        else if ($col == "6") $col = "";
+        else $col = "";
 
         $this->db->select("p.*,j.name as nama_jenis_pohon")
             ->from("point p")
@@ -54,14 +56,13 @@ class Point extends CI_Model
 
         $tot = $this->db->get()->result_array();
 
-        $start_no = intval($start) + 1;
         $temp = array();
         foreach ($res as $val) {
             $pass_by['id'] = $val['id'];
             $button = $this->load->view($template->theme . "button/default", $pass_by, true);
 
             $t = array();
-            $t[] = $start_no;
+            $t[] = $val['id'];
             $t[] = $val['nama_jenis_pohon'];
             $t[] = $val['segmen'];
             $t[] = $val['tinggi'] . " m";
@@ -70,7 +71,6 @@ class Point extends CI_Model
             $t[] = !empty($val['image'])?"<a href='images/{$val['image']}' target='_blank'><img class='image' src='images/{$val['image']}' /></a>":"";
             $t[] = $button;
             $temp[] = $t;
-            $start_no++;
         }
         $data = array("draw" => $get["draw"], "recordsTotal" => $tot[0]['total'], "recordsFiltered" => $tot[0]['total'], "data" => $temp);
         return $data;

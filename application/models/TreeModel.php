@@ -21,7 +21,7 @@ class TreeModel extends CI_Model
         $this->db->select("*")
             ->from("point")
             ->where("deleted", "0")
-            ->where("tinggi >= limit_tinggi");
+            ->where("tinggi >= 10"); //pohon alert selalu diatas atau sama dengan 10 M
 
         return $this->db->get()->result_array();
     }

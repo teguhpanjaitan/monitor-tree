@@ -79,9 +79,7 @@ CREATE TABLE `point` (
   `id_jenis_pohon` int(10) NOT NULL,
   `segmen` varchar(100) DEFAULT NULL,
   `tanggal` date NOT NULL,
-  `tinggi_awal` double NOT NULL DEFAULT '0',
   `tinggi` float NOT NULL DEFAULT '0',
-  `limit_tinggi` float NOT NULL DEFAULT '0',
   `latitude` double NOT NULL DEFAULT '0',
   `longitude` double NOT NULL DEFAULT '0',
   `tiang1` varchar(255) DEFAULT '',
@@ -101,33 +99,6 @@ LOCK TABLES `point` WRITE;
 /*!40000 ALTER TABLE `point` DISABLE KEYS */;
 INSERT INTO `point` VALUES (1,1,'segmen-5','2019-12-06',1,2,5,0.671621276,99.704031779,'',0),(7,1,'SEGMENT-YB.03-MAIN41-SAYUR MAINCAT 1','2019-12-06',55,55,50,0.671492539,99.704139067,'',0),(8,1,'segmen-a10','2010-03-20',35,35,55,0.8223488,0.732999,'Screen Shot 2020-03-18 at 11.15.37.png',0);
 /*!40000 ALTER TABLE `point` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `tiang`
---
-
-DROP TABLE IF EXISTS `tiang`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `tiang` (
-  `id` bigint(10) NOT NULL,
-  `kode_hantaran` varchar(255) DEFAULT NULL,
-  `deskripsi` varchar(255) DEFAULT NULL,
-  `longitude` float DEFAULT NULL,
-  `latitude` float DEFAULT NULL,
-  `status` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tiang`
---
-
-LOCK TABLES `tiang` WRITE;
-/*!40000 ALTER TABLE `tiang` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tiang` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

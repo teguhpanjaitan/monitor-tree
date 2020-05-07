@@ -23,7 +23,6 @@ class Point extends CI_Controller
 			unset($post['act']);
 			$table = $post['table'];
 			unset($post['table']);
-			$post['tinggi'] = $this->input->post("tinggi_awal");
 
 			$tiang1 = $this->input->post("tiang1");
 			$tiang2 = $this->input->post("tiang2");
@@ -38,7 +37,6 @@ class Point extends CI_Controller
 			unset($post['act']);
 			$table = $post['table'];
 			unset($post['table']);
-			$post['tinggi'] = $this->input->post("tinggi_awal");
 
 			$tiang1 = $this->input->post("tiang1");
 			$tiang2 = $this->input->post("tiang2");

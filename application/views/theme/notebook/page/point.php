@@ -50,7 +50,7 @@
 							</div>
 							<div class="form-group">
 								<label>Tinggi Pengukuran Saat Ini (M)</label>
-								<input type="number" name="tinggi_awal" class="form-control" step=".01" required>
+								<input type="number" name="tinggi" class="form-control" step=".01" required>
 							</div>
 							<div class="form-group">
 								<label>Tiang 1</label>
@@ -112,7 +112,7 @@
 							</div>
 							<div class="form-group">
 								<label>Tinggi Pengukuran Saat Ini (M)</label>
-								<input type="number" name="tinggi_awal" class="form-control" step=".01" required>
+								<input type="number" name="tinggi" class="form-control" step=".01" required>
 							</div>
 							<div class="form-group">
 								<label>Tiang 1</label>
@@ -211,7 +211,7 @@ jQuery('#satker').dataTable({
 	'ajax': '" . base_url("ajax/act/point") . "',
 	'sDom': " . '"' . "<'row'<'col-sm-6'l><'col-sm-6'f>r>t<'row'<'col-sm-6'i><'col-sm-6'p>>" . '"' . ",
 	'sPaginationType': 'full_numbers',
-	'columnDefs': [ { targets: -1, orderable: false } ]
+	'columnDefs': [ { targets: -1, orderable: false },{ targets: -2, orderable: false },{ targets: -4, orderable: false } ]
 });
 </script>
 ";
@@ -231,7 +231,7 @@ jQuery('#satker').dataTable({
 		}).done(function(result) {
 			$("#edit_id").val(id);
 			$("#edit input[name='tanggal']").val(result.tanggal);
-			$("#edit input[name='tinggi_awal']").val(result.tinggi_awal);
+			$("#edit input[name='tinggi']").val(result.tinggi);
 
 			$("#edit-tiang1").val(result.tiang1);
 			$("#edit-tiang2").val(result.tiang2);
