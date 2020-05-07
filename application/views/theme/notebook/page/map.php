@@ -161,21 +161,23 @@ $template->footer_add = "<script src='https://unpkg.com/@google/markerclustererp
 			}
 		}).done(function(result) {
 			var zoom = map.getZoom();
-			$.each(result, function(i, val) {
-				content = "";
-				if (zoom > zoomLimit) {
-					content += "<p>Kode Hantaran : " + val[2] + "</p>";
-					content += "<p>Description : " + val[3] + "</p>";
-					addPMarker(val[5], val[6], content, "<?php echo base_url("assets/icons/pole.png") ?>");
-				} else {
-					content += "<p>Group Kode Hantaran : " + val[2] + "</p>";
-					if (val[7] == true) {
-						addPMarker(val[5], val[6], content, "<?php echo base_url("assets/icons/poles-red.png") ?>");
+			if (result !== null) {
+				$.each(result, function(i, val) {
+					content = "";
+					if (zoom > zoomLimit) {
+						content += "<p>Kode Hantaran : " + val[2] + "</p>";
+						content += "<p>Description : " + val[3] + "</p>";
+						addPMarker(val[5], val[6], content, "<?php echo base_url("assets/icons/pole.png") ?>");
 					} else {
-						addPMarker(val[5], val[6], content, "<?php echo base_url("assets/icons/poles.png") ?>");
+						content += "<p>Group Kode Hantaran : " + val[2] + "</p>";
+						if (val[7] == true) {
+							addPMarker(val[5], val[6], content, "<?php echo base_url("assets/icons/poles-red.png") ?>");
+						} else {
+							addPMarker(val[5], val[6], content, "<?php echo base_url("assets/icons/poles.png") ?>");
+						}
 					}
-				}
-			});
+				});
+			}
 			$("#ld4").css("display", "none");
 		}).fail(function() {
 			//fail function
@@ -220,7 +222,7 @@ $template->footer_add = "<script src='https://unpkg.com/@google/markerclustererp
 					content += "<a href='images/" + val.image + "' target='_blank'><img style='max-height:250px' src='images/" + val.image + "'/></a>";
 				}
 
-				if (val.tinggi >= val.limit_tinggi) {
+				if (parseFloat(val.tinggi) >= 10) {
 					addPMarker(val.latitude, val.longitude, content, "<?php echo base_url("assets/icons/tree-red.png") ?>");
 				} else {
 					addPMarker(val.latitude, val.longitude, content, '');
