@@ -22,7 +22,7 @@ class DashboardModel extends CI_Model
         $this->db->select("count(id) as count")
             ->from("point")
             ->where("deleted", "0")
-            ->where("tinggi >= limit_tinggi");
+            ->where("tinggi >= 10");
 
         $res = $this->db->get()->row();
         return $res->count;
