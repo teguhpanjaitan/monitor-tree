@@ -14,6 +14,6 @@ class Ajax extends CI_Controller
 			$response = '';
 		}
 		
-		$this->load->view("ajax",$response);
+		$this->load->view("ajax",['response' => $response]);
 	}
 }
