@@ -285,16 +285,9 @@ jQuery('#satker').dataTable({
 			});
 
 			$("#edit input[name='bentangan']").val(result.bentangan);
-			$("#edit select[name='penanganan']").val(result.penanganan);
 			$("#edit textarea[name='keterangan']").val(result.keterangan);
-
-			$("#edit select[name='id_jenis_pohon'] option").each(function() {
-				$(this).removeAttr("selected");
-				tmp = $(this).val();
-				if (tmp == result.id_jenis_pohon) {
-					$(this).attr("selected", "selected");
-				}
-			});
+			$("#edit select[name='penanganan']").val(result.penanganan);
+			$("#edit select[name='id_jenis_pohon']").val(result.id_jenis_pohon);
 
 			toggle_edit();
 		}).fail(function() {
