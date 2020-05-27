@@ -14,7 +14,7 @@ if (!function_exists('get_login_exception'))
 {
 	function get_login_exception()
 	{
-		return array("login","logout","apps_api","konfirmasi");
+		return array("login","logout");
 	}
 }
 
