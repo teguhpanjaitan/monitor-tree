@@ -65,10 +65,12 @@ class Point extends CI_Model
             $t[] = $val['id'];
             $t[] = $val['nama_jenis_pohon'];
             $t[] = $val['segmen'];
-            $t[] = $val['tinggi'] . " m";
+            $t[] = ($val['tinggi'] == 0) ? "" : $val['tinggi'] . " m";
             $t[] = "Tiang 1:<br>{$val['tiang1']}<br> Tiang 2:<br>{$val['tiang2']}";
+            $t[] = ($val['bentangan'] == 0) ? "" : $val['bentangan'] . " m";
+            $t[] = $val['penanganan'];
             $t[] = $val['keterangan'];
-            $t[] = !empty($val['image'])?"<a href='images/{$val['image']}' target='_blank'><img class='image' src='images/{$val['image']}' /></a>":"";
+            $t[] = !empty($val['image']) ? "<a href='images/{$val['image']}' target='_blank'><img class='image' src='images/{$val['image']}' /></a>" : "";
             $t[] = $button;
             $temp[] = $t;
         }

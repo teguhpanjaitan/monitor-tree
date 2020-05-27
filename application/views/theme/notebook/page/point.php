@@ -15,10 +15,12 @@
 				<tr>
 					<th style="min-width:60px">No</th>
 					<th style="min-width:120px">Jenis Pohon</th>
-					<th style="min-width:150px">Segmen</th>
+					<th style="min-width:120px">Segmen</th>
 					<th style="min-width:85px">Tinggi</th>
-					<th style="min-width:150px">Posisi</th>
-					<th style="min-width:150px">Keterangan</th>
+					<th style="min-width:120px">Posisi</th>
+					<th style="min-width:110px">Bentangan</th>
+					<th style="min-width:120px">Penanganan</th>
+					<th style="min-width:110px">Ket.</th>
 					<th style="min-width:100px">Gambar</th>
 					<th style="min-width:50px"></th>
 				</tr>
@@ -64,6 +66,19 @@
 								<!-- <input type="number" name="longitude" class="form-control" step=".000000001" required> -->
 								<select id="new-tiang2" name="tiang2" style="width:100%" required>
 									<option value="">Input Tiang 2</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label>Bentangan Pohon (M)</label>
+								<input type="number" class="form-control" name="bentangan" step="0.01" required/>
+							</div>
+							<div class="form-group">
+								<label>Penanganan Pohon</label>
+								<select name="penanganan" class="form-control" required>
+									<option value="">Pilih Penanganan</option>
+									<option value="Tebang kandas">Tebang kandas</option>
+									<option value="Rabas-rabas">Rabas-rabas</option>
+									<option value="Diracun">Diracun</option>
 								</select>
 							</div>
 							<div class="form-group">
@@ -120,6 +135,19 @@
 								<!-- <input type="number" name="longitude" class="form-control" step=".000000001" required> -->
 								<select id="edit-tiang2" name="tiang2" style="width:100%" required>
 									<option value="">Input Tiang 2</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label>Bentangan Pohon (M)</label>
+								<input type="number" class="form-control" name="bentangan" step="0.01" required/>
+							</div>
+							<div class="form-group">
+								<label>Penanganan Pohon</label>
+								<select name="penanganan" class="form-control" required>
+									<option value="">Pilih Penanganan</option>
+									<option value="Tebang kandas">Tebang kandas</option>
+									<option value="Rabas-rabas">Rabas-rabas</option>
+									<option value="Diracun">Diracun</option>
 								</select>
 							</div>
 							<div class="form-group">
@@ -220,7 +248,7 @@ jQuery('#satker').dataTable({
 	'ajax': '" . base_url("ajax/act/point") . "',
 	'sDom': " . '"' . "<'row'<'col-sm-6'l><'col-sm-6'f>r>t<'row'<'col-sm-6'i><'col-sm-6'p>>" . '"' . ",
 	'sPaginationType': 'full_numbers',
-	'columnDefs': [ { targets: -1, orderable: false },{ targets: -2, orderable: false },{ targets: -4, orderable: false } ]
+	'columnDefs': [ { targets: -1, orderable: false },{ targets: -2, orderable: false },{ targets: -6, orderable: false } ]
 });
 </script>
 ";
@@ -256,6 +284,8 @@ jQuery('#satker').dataTable({
 				}
 			});
 
+			$("#edit input[name='bentangan']").val(result.bentangan);
+			$("#edit select[name='penanganan']").val(result.penanganan);
 			$("#edit textarea[name='keterangan']").val(result.keterangan);
 
 			$("#edit select[name='id_jenis_pohon'] option").each(function() {

@@ -84,6 +84,8 @@ CREATE TABLE `point` (
   `longitude` double NOT NULL DEFAULT '0',
   `tiang1` varchar(255) DEFAULT '',
   `tiang2` varchar(255) DEFAULT '',
+  `bentangan` float NOT NULL DEFAULT '0',
+  `penanganan` varchar(255) DEFAULT '',
   `keterangan` VARCHAR(1020) DEFAULT '',
   `image` varchar(255) DEFAULT '',
   `deleted` tinyint(1) NOT NULL DEFAULT '0',
