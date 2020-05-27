@@ -55,21 +55,15 @@
 							<div class="form-group">
 								<label>Tiang 1</label>
 								<!-- <input type="number" name="latitude" class="form-control" step=".000000001" required> -->
-								<select id="new-tiang1" name="tiang1" style="width:260px" required>
-									<option value="">&nbsp;</option>
-									<?php foreach ($tiangs as $tiang) : ?>
-										<option value="<?= $tiang['nama'] ?>"><?= $tiang['nama'] ?></option>
-									<?php endforeach; ?>
+								<select id="new-tiang1" name="tiang1" style="width:100%" required>
+									<option value="">Input Tiang 1</option>
 								</select>
 							</div>
 							<div class="form-group">
 								<label>Tiang 2</label>
 								<!-- <input type="number" name="longitude" class="form-control" step=".000000001" required> -->
-								<select id="new-tiang2" name="tiang2" style="width:260px" required>
-									<option value="">&nbsp;</option>
-									<?php foreach ($tiangs as $tiang) : ?>
-										<option value="<?= $tiang['nama'] ?>"><?= $tiang['nama'] ?></option>
-									<?php endforeach; ?>
+								<select id="new-tiang2" name="tiang2" style="width:100%" required>
+									<option value="">Input Tiang 2</option>
 								</select>
 							</div>
 							<div class="form-group">
@@ -117,21 +111,15 @@
 							<div class="form-group">
 								<label>Tiang 1</label>
 								<!-- <input type="number" name="latitude" class="form-control" step=".000000001" required> -->
-								<select id="edit-tiang1" name="tiang1" style="width:260px" required>
-									<option value="">&nbsp;</option>
-									<?php foreach ($tiangs as $tiang) : ?>
-										<option value="<?= $tiang['nama'] ?>"><?= $tiang['nama'] ?></option>
-									<?php endforeach; ?>
+								<select id="edit-tiang1" name="tiang1" style="width:100%" required>
+									<option value="">Input Tiang 1</option>
 								</select>
 							</div>
 							<div class="form-group">
 								<label>Tiang 2</label>
 								<!-- <input type="number" name="longitude" class="form-control" step=".000000001" required> -->
-								<select id="edit-tiang2" name="tiang2" style="width:260px" required>
-									<option value="">&nbsp;</option>
-									<?php foreach ($tiangs as $tiang) : ?>
-										<option value="<?= $tiang['nama'] ?>"><?= $tiang['nama'] ?></option>
-									<?php endforeach; ?>
+								<select id="edit-tiang2" name="tiang2" style="width:100%" required>
+									<option value="">Input Tiang 2</option>
 								</select>
 							</div>
 							<div class="form-group">
@@ -187,21 +175,42 @@
 global $template;
 $template->footer_add = "
 <script src='" . base_url("assets/notebook/") . "/js/datatables/jquery.dataTables.min.js'></script>
-<script src='" . base_url("assets/notebook/") . "/js/select2/select2.min.js'></script>
+<link href='https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css' rel='stylesheet' />
+<script src='https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js'></script>
 
 <script>
 $( document ).ready(function() {
 	$('#new-tiang1').select2({
 		minimumInputLength: 5,
+		ajax: {
+			delay: 800,
+			url: '" .  base_url("ajax/act/dropdown_tiang") . "',
+			dataType: 'json'
+		}
 	});
 	$('#new-tiang2').select2({
 		minimumInputLength: 5,
+		ajax: {
+			delay: 800,
+			url: '" .  base_url("ajax/act/dropdown_tiang") . "',
+			dataType: 'json'
+		}
 	});
 	$('#edit-tiang1').select2({
 		minimumInputLength: 5,
+		ajax: {
+			delay: 800,
+			url: '" .  base_url("ajax/act/dropdown_tiang") . "',
+			dataType: 'json'
+		}
 	});
 	$('#edit-tiang2').select2({
 		minimumInputLength: 5,
+		ajax: {
+			delay: 800,
+			url: '" .  base_url("ajax/act/dropdown_tiang") . "',
+			dataType: 'json'
+		}
 	});
 });
 
