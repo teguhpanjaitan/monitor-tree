@@ -242,10 +242,18 @@ jQuery('#satker').dataTable({
 			$("#edit input[name='tanggal']").val(result.tanggal);
 			$("#edit input[name='tinggi']").val(result.tinggi);
 
-			$("#edit-tiang1").val(result.tiang1);
-			$("#edit-tiang2").val(result.tiang2);
-			$("#edit-tiang1").trigger('change');
-			$("#edit-tiang2").trigger('change');
+			$("#edit-tiang1").select2("trigger", "select", {
+				data: {
+					id: result.tiang1,
+					text: result.tiang1
+				}
+			});
+			$("#edit-tiang2").select2("trigger", "select", {
+				data: {
+					id: result.tiang2,
+					text: result.tiang2
+				}
+			});
 
 			$("#edit textarea[name='keterangan']").val(result.keterangan);
 
