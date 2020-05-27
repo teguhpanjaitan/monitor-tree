@@ -230,6 +230,7 @@ jQuery('#satker').dataTable({
 	var temp;
 
 	function edit(id) {
+		toggle_edit();
 		$.ajax({
 			url: '<?php echo base_url("ajax/act/get_items") ?>',
 			dataType: 'json',
@@ -264,8 +265,10 @@ jQuery('#satker').dataTable({
 					$(this).attr("selected", "selected");
 				}
 			});
+
+			toggle_edit();
 		}).fail(function() {
-			alert("Gagal mengambil detail data")
+			alert("Gagal mengambil detail data");
 		});
 	}
 
@@ -283,6 +286,16 @@ jQuery('#satker').dataTable({
 		}).fail(function() {
 			alert("fail")
 		});
+	}
+
+	function toggle_edit() {
+		var disabled = $("#edit input").attr("disabled");
+
+		if (disabled === "disabled") {
+			$("#edit input, #edit select, #edit textarea").removeAttr("disabled");
+		} else {
+			$("#edit input, #edit select, #edit textarea").attr("disabled", "disabled");
+		}
 	}
 </script>
 
