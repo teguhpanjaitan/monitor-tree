@@ -57,6 +57,19 @@ class Point extends CI_Controller
 		$template->content = $this->load->view($template->theme . "page/point", $data, true);
 	}
 
+	public function download()
+	{
+		$str = $this->tm->get_downloaded_csv();
+
+		header('Content-Disposition: attachment; filename="point.csv"');
+		header('Content-Type: text/csv');
+		header('Content-Length: ' . strlen($str));
+		header('Connection: close');
+
+		echo $str;
+		exit();
+	}
+
 	private function get_tiangs()
 	{
 		$file = fopen("tiang.csv", "r");
