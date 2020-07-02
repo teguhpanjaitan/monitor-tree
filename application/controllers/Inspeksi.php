@@ -30,6 +30,7 @@ class Inspeksi extends CI_Controller
 			$post['latitude'] = $temp['latitude'];
 			$post['longitude'] = $temp['longitude'];
 			$post['segmen'] = $this->get_tiang_segmen($tiang1);
+			$post['tinggi'] = $post['tinggi_pengukuran'];
 
 			if (empty($post['tanggal_inspeksi'])) {
 				$post['tanggal_inspeksi'] = date('Y-m-d H:i:s');
@@ -47,6 +48,7 @@ class Inspeksi extends CI_Controller
 			$post['latitude'] = $temp['latitude'];
 			$post['longitude'] = $temp['longitude'];
 			$post['segmen'] = $this->get_tiang_segmen($tiang1);
+			$post['tinggi'] = $post['tinggi_pengukuran'];
 
 			if (empty($post['tanggal_inspeksi'])) {
 				$post['tanggal_inspeksi'] = date('Y-m-d H:i:s');

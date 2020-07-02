@@ -10,7 +10,7 @@ class DashboardModel extends CI_Model
     public function count_pohon()
     {
         $this->db->select("count(id) as count")
-            ->from("point")
+            ->from("inspeksi")
             ->where("deleted", "0");
 
         $res = $this->db->get()->row();
@@ -20,7 +20,7 @@ class DashboardModel extends CI_Model
     public function count_pohon_alert()
     {
         $this->db->select("count(id) as count")
-            ->from("point")
+            ->from("inspeksi")
             ->where("deleted", "0")
             ->where("tinggi >= 10");
 

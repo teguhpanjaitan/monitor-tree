@@ -6,7 +6,7 @@ class Get_all_tree extends CI_Model
 	public function exec()
 	{
 		$this->db->select("jp.name as jenis_pohon,p.*")
-			->from("point as p")
+			->from("inspeksi as p")
 			->join("jenis_pohon as jp", "jp.id = p.id_jenis_pohon", "left")
 			->where("p.deleted", "0");
 		$ret = $this->db->get()->result_array();

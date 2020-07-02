@@ -77,6 +77,7 @@ class Bulk_import extends CI_Controller
 				$data['segmen'] = $segmen;
 				$data['tanggal_inspeksi'] = $tanggal_inspeksi;
 				$data['tinggi_pengukuran'] = $temp[9];
+				$data['tinggi'] = $temp[9];
 				$data['latitude'] = $location[0];
 				$data['longitude'] = $location[1];
 				$data['tiang1'] = $temp[4];
@@ -111,6 +112,9 @@ class Bulk_import extends CI_Controller
 		while (!feof($file)) {
 			$temp = [];
 			$data = fgetcsv($file, 0, ';');
+			$data[5] = str_replace(",", '.', $data[5]);
+			$data[6] = str_replace(",", '.', $data[6]);
+
 			$temp["name"] = $data[3];
 			$temp["segment"] = $data[2];
 			$temp["latitude"] = $data[5];

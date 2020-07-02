@@ -19,7 +19,7 @@ class TreeModel extends CI_Model
     public function get_pohon_alert()
     {
         $this->db->select("*")
-            ->from("point")
+            ->from("inspeksi")
             ->where("deleted", "0")
             ->where("tinggi >= 10"); //pohon alert selalu diatas atau sama dengan 10 M
 
@@ -29,7 +29,7 @@ class TreeModel extends CI_Model
     public function get_downloaded_csv()
     {
         $this->db->select("jp.name as jenis_pohon,p.*")
-            ->from("point as p")
+            ->from("inspeksi as p")
             ->join("jenis_pohon as jp","jp.id = p.id_jenis_pohon","left")
             ->where("p.deleted", "0");
         
