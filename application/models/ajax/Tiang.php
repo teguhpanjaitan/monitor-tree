@@ -34,6 +34,11 @@ class Tiang extends CI_Model
             while (!feof($file)) {
                 $data = fgetcsv($file, 0, ';');
 
+                $data[5] = str_replace(",",".",$data[5]);
+                $data[5] = floatval($data[5]);
+                $data[6] = str_replace(",",".",$data[6]);
+                $data[6] = floatval($data[6]);
+
                 if (!empty($data[2])) {
                     if ($data[2] != $hantaranOld) {
                         if ($c != 0) {
@@ -71,6 +76,11 @@ class Tiang extends CI_Model
                 $data = fgetcsv($file, 0, ';');
 
                 //latitude part
+                $data[5] = str_replace(",",".",$data[5]);
+                $data[5] = floatval($data[5]);
+                $data[6] = str_replace(",",".",$data[6]);
+                $data[6] = floatval($data[6]);
+                
                 if ($data[5] >= $southWest[0] && $data[5] <= $northeEast[0]) {
                     if ($data[6] >= $southWest[1] && $data[6] <= $northeEast[1]) {
                         if(!empty($segment_alerts[strtolower($data[2])])){
