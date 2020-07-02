@@ -3,6 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Bulk_import extends CI_Controller
 {
+	private $tiangs;
 
 	function __construct()
 	{
@@ -19,6 +20,7 @@ class Bulk_import extends CI_Controller
 
 		$data = [];
 		if ($act == 'import') {
+			$this->tiangs = $this->load_tiang();
 			$data = $this->import();
 		}
 
@@ -32,43 +34,63 @@ class Bulk_import extends CI_Controller
 		if (($handle = fopen($_FILES["file"]["tmp_name"], "r")) !== FALSE) {
 			fgetcsv($handle, 1000, ";");
 			$errors = [];
+
 			while (($temp = fgetcsv($handle, 1000, ";")) !== FALSE) {
 				$data = [];
 
-				$jenis_pohon = strtolower($temp[0]);
-				$result = $this->crud->get_data("jenis_pohon", "name", $jenis_pohon);
-				if (count($result) == 0) {
-					$errors[] = "'$jenis_pohon' tidak ditemukan";
+				if (empty($temp[1]) || $temp[1] == '0') {
 					continue;
 				}
 
+				$jenis_pohon = strtolower($temp[1]);
+				$result_jenis_pohon = $this->crud->get_data("jenis_pohon", "name", $jenis_pohon);
+
+				if (count($result_jenis_pohon) == 0) {
+					$jenis = [];
+					$jenis['name'] = $jenis_pohon;
+					$jenis['deleted'] = 0;
+					$this->crud->tambah_data($jenis, 'jenis_pohon');
+					$result_jenis_pohon = $this->crud->get_data("jenis_pohon", "name", $jenis_pohon);
+				}
+
+				$result_jenis_pohon = $result_jenis_pohon[0];
+
 				//check data if exist
 				$this->db->select("*")
-					->from("point")
-					->where("segmen", $temp[1])
-					->where("latitude", $temp[5])
-					->where("longitude", $temp[6]);
+					->from("inspeksi")
+					->where("tiang1", $temp[4])
+					->where("tiang2", $temp[5]);
 				$result2 = $this->db->get()->result_array();
+
+				$location = $this->get_location_by_tiang($temp[4]);
+				$segmen = $this->get_segmen_by_tiang($temp[4]);
+
+				if (empty($segmen) || count($location) == 0) {
+					$errors[] = "Data no {$temp[0]} segmen atau koordinat lokasi tidak ditemukan";
+					continue;
+				}
+
+				$dateTime = DateTime::createFromFormat('d/m/Y', $temp[8]);
+				$tanggal_inspeksi = $dateTime->format('Y-m-d');
+
+				$data['id_jenis_pohon'] = $result_jenis_pohon['id'];
+				$data['segmen'] = $segmen;
+				$data['tanggal_inspeksi'] = $tanggal_inspeksi;
+				$data['tinggi_pengukuran'] = $temp[9];
+				$data['latitude'] = $location[0];
+				$data['longitude'] = $location[1];
+				$data['tiang1'] = $temp[4];
+				$data['tiang2'] = $temp[5];
+				$data['jarak_hutm_terdekat'] = $temp[11];
+				$data['rekomendasi_penanganan'] = $temp[12];
+				$data['ujung_pohon'] = $temp[13];
+				$data['keterangan'] = isset($temp[14]) ? $temp[14] : "";
 
 				if (count($result2)) {
 					$data['ID'] = $result2[0]['id'];
-					$data['id_jenis_pohon'] = $result[0]['id'];
-					$data['segmen'] = $temp[1];
-					$data['tanggal'] = $temp[2];
-					$data['tinggi_awal'] = $temp[3];
-					$data['limit_tinggi'] = $temp[4];
-					$data['tinggi'] = $data['tinggi_awal'];
-					$this->crud->update_data($data, 'point');
+					$this->crud->update_data($data, 'inspeksi');
 				} else {
-					$data['id_jenis_pohon'] = $result[0]['id'];
-					$data['segmen'] = $temp[1];
-					$data['tanggal'] = $temp[2];
-					$data['tinggi_awal'] = $temp[3];
-					$data['limit_tinggi'] = $temp[4];
-					$data['latitude'] = $temp[5];
-					$data['longitude'] = $temp[6];
-					$data['tinggi'] = $data['tinggi_awal'];
-					$this->crud->tambah_data($data, 'point');
+					$this->crud->tambah_data($data, 'inspeksi');
 				}
 			}
 			fclose($handle);
@@ -78,5 +100,47 @@ class Bulk_import extends CI_Controller
 
 		$return['errors'] = $errors;
 		return $return;
+	}
+
+	private function load_tiang()
+	{
+		$file = fopen("tiang.csv", "r");
+		fgetcsv($file); //ignore first line
+
+		$tiangs = [];
+		while (!feof($file)) {
+			$temp = [];
+			$data = fgetcsv($file, 0, ';');
+			$temp["name"] = $data[3];
+			$temp["segment"] = $data[2];
+			$temp["latitude"] = $data[5];
+			$temp["logitude"] = $data[6];
+
+			$tiangs[] = $temp;
+		}
+
+		return $tiangs;
+	}
+
+	private function get_segmen_by_tiang($tiang_name)
+	{
+		foreach ($this->tiangs as $tiang) {
+			if ($tiang_name == $tiang['name']) {
+				return $tiang['segment'];
+			}
+		}
+
+		return '';
+	}
+
+	private function get_location_by_tiang($tiang_name)
+	{
+		foreach ($this->tiangs as $tiang) {
+			if ($tiang_name == $tiang['name']) {
+				return [$tiang['latitude'], $tiang['logitude']];
+			}
+		}
+
+		return [];
 	}
 }

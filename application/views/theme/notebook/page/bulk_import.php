@@ -15,7 +15,7 @@
 				<form role="form" action="" method="post" enctype="multipart/form-data">
 					<p style="font-weight:bolder">Data yang akan di-upload adalah format csv</p>
 					<p style="font-weight:bolder">Baris pertama akan diabaikan, maka bisa dijadikan sebagai header tabel</p>
-					<p style="font-weight:bolder">Silahkan mengikuti format : "Jenis pohon";"segmen";"tanggal pengukuran";"tinggi pengukuran";"limit tinggi";"latitude";"longitude"</p>
+					<p style="font-weight:bolder">Silahkan mengikuti format : "No.;Jenis Pohon;Alamat;Penyulang;LOCATION 1;LOCATION 2;NO TIANG 1;NO TIANG 2;Tanggal Inspeksi;Tinggi pengukuran (M);Limit tinggi (M);Posisi Pohon dari hutm terdekat (M);rekomendasi metode rintis;Posisi ujung pohon/dahan"</p>
 					<p style="font-weight:bolder"><a href="/sample.csv">Contoh file</a></p>
 					<br>
 					<div class="form-group">
