@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Aplikasi Monitoring Tree</title>
+  <title>Aplikasi Manajemen Pohon PLN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <link rel="stylesheet" href="<?php echo base_url("assets/notebook") ?>/css/bootstrap.css" type="text/css" />
   <link rel="stylesheet" href="<?php echo base_url("assets/notebook/") ?>/css/animate.css" type="text/css" />

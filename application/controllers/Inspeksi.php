@@ -31,19 +31,26 @@ class Inspeksi extends CI_Controller
 			$post['longitude'] = $temp['longitude'];
 			$post['segmen'] = $this->get_tiang_segmen($tiang1);
 
+			if (empty($post['tanggal_inspeksi'])) {
+				$post['tanggal_inspeksi'] = date('Y-m-d H:i:s');
+			}
+
 			$this->crud->tambah_data($post, $table);
 		} else if ($act == 'edit_data') {
 			$post = $this->input->post();
 			unset($post['act']);
 			$table = $post['table'];
 			unset($post['table']);
-
 			$tiang1 = $this->input->post("tiang1");
 			$tiang2 = $this->input->post("tiang2");
 			$temp = $this->get_pohon_position($tiang1, $tiang2);
 			$post['latitude'] = $temp['latitude'];
 			$post['longitude'] = $temp['longitude'];
 			$post['segmen'] = $this->get_tiang_segmen($tiang1);
+
+			if (empty($post['tanggal_inspeksi'])) {
+				$post['tanggal_inspeksi'] = date('Y-m-d H:i:s');
+			}
 
 			$this->crud->update_data($post, $table);
 		} else if ($act == 'delete') {
@@ -101,6 +108,9 @@ class Inspeksi extends CI_Controller
 		//get both position
 		while (!feof($file)) {
 			$data = fgetcsv($file, 0, ';');
+
+			$data[5] = str_replace(",", '.', $data[5]);
+			$data[6] = str_replace(",", '.', $data[6]);
 
 			if ($data[3] === $tiang1) {
 				$tiang1_pos["latitude"] = floatval($data[5]);

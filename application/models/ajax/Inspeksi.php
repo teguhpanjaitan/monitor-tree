@@ -20,12 +20,15 @@ class Inspeksi extends CI_Model
         $search = $this->db->escape_str($search);
 
         if ($col == "0") $col = "id";
-        else if ($col == "1") $col = "nama_jenis_pohon";
-        else if ($col == "2") $col = "segmen";
-        else if ($col == "3") $col = "tinggi";
-        else if ($col == "4") $col = "";
-        else if ($col == "5") $col = "keterangan";
-        else if ($col == "6") $col = "";
+        else if ($col == "1") $col = "tanggal_inspeksi";
+        else if ($col == "2") $col = "nama_jenis_pohon";
+        else if ($col == "3") $col = "";
+        else if ($col == "4") $col = "tinggi_pengukuran";
+        else if ($col == "5") $col = "jarak_hutm_terdekat";
+        else if ($col == "6") $col = "rekomendasi_penanganan";
+        else if ($col == "7") $col = "ujung_pohon";
+        else if ($col == "8") $col = "keterangan";
+        else if ($col == "9") $col = "";
         else $col = "";
 
         $this->db->select("p.*,j.name as nama_jenis_pohon")
@@ -63,12 +66,13 @@ class Inspeksi extends CI_Model
 
             $t = array();
             $t[] = $val['id'];
+            $t[] = date("d-m-Y", strtotime($val['tanggal_inspeksi']));
             $t[] = $val['nama_jenis_pohon'];
-            $t[] = $val['segmen'];
-            $t[] = ($val['tinggi'] == 0) ? "" : $val['tinggi'] . " m";
             $t[] = "Tiang 1:<br>{$val['tiang1']}<br> Tiang 2:<br>{$val['tiang2']}";
-            $t[] = ($val['bentangan'] == 0) ? "" : $val['bentangan'] . " m";
-            $t[] = $val['penanganan'];
+            $t[] = ($val['tinggi_pengukuran'] == 0) ? "" : $val['tinggi_pengukuran'] . " M";
+            $t[] = ($val['jarak_hutm_terdekat'] == 0) ? "" : $val['jarak_hutm_terdekat'] . " M";
+            $t[] = $val['rekomendasi_penanganan'];
+            $t[] = $val['ujung_pohon'];
             $t[] = $val['keterangan'];
             $t[] = !empty($val['image']) ? "<a href='images/{$val['image']}' target='_blank'><img class='image' src='images/{$val['image']}' /></a>" : "";
             $t[] = $button;

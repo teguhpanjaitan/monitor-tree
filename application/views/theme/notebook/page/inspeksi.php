@@ -8,22 +8,23 @@
 <section class="panel panel-default">
 	<header class="panel-heading">
 		<a href="#new-data" class="btn btn-success" data-toggle="modal">Tambah Data</a>
-		<a href="<?= base_url("inspeksi/download") ?>" class="btn btn-info" >Download</a>
+		<a href="<?= base_url("inspeksi/download") ?>" class="btn btn-info">Download</a>
 	</header>
 	<div class="table-responsive">
 		<table id="satker" class="table table-striped b-t b-light" data-ride="datatables">
 			<thead>
 				<tr>
 					<th style="min-width:60px">No</th>
-					<th style="min-width:120px">Jenis Pohon</th>
-					<th style="min-width:120px">Segmen</th>
-					<th style="min-width:85px">Tinggi</th>
+					<th style="min-width:100px">Tanggal</th>
+					<th style="min-width:100px">Jenis<br>Pohon</th>
 					<th style="min-width:120px">Posisi</th>
-					<th style="min-width:110px">Bentangan</th>
-					<th style="min-width:120px">Penanganan</th>
+					<th style="min-width:80px">Tinggi<br>Pengukuran</th>
+					<th style="min-width:100px">HUTM<br>terdekat</th>
+					<th style="min-width:120px">Rekomendasi<br>Penanganan</th>
+					<th style="min-width:90px">Ujung<br>Pohon</th>
 					<th style="min-width:110px">Ket.</th>
 					<th style="min-width:100px">Gambar</th>
-					<th style="min-width:50px"></th>
+					<th style="min-width:100px"></th>
 				</tr>
 			</thead>
 		</table>
@@ -48,14 +49,6 @@
 								</select>
 							</div>
 							<div class="form-group">
-								<label>Tanggal Pengukuran</label>
-								<input type="date" name="tanggal" class="form-control" required>
-							</div>
-							<div class="form-group">
-								<label>Tinggi Pengukuran Saat Ini (M)</label>
-								<input type="number" name="tinggi" class="form-control" step=".01" required>
-							</div>
-							<div class="form-group">
 								<label>Tiang 1</label>
 								<!-- <input type="number" name="latitude" class="form-control" step=".000000001" required> -->
 								<select id="new-tiang1" name="tiang1" style="width:100%" required>
@@ -70,12 +63,24 @@
 								</select>
 							</div>
 							<div class="form-group">
-								<label>Bentangan Pohon (M)</label>
-								<input type="number" class="form-control" name="bentangan" step="0.01" required/>
+								<label>Tanggal Pengukuran (Biarkan kosong utk tanggal sekarang)</label>
+								<input type="date" name="tanggal_inspeksi" class="form-control">
 							</div>
 							<div class="form-group">
-								<label>Penanganan Pohon</label>
-								<select name="penanganan" class="form-control" required>
+								<label>Tinggi Pengukuran Saat Ini (M)</label>
+								<input type="number" name="tinggi_pengukuran" class="form-control" step=".01" required>
+							</div>
+							<div class="form-group">
+								<label>Posisi pohon dari HUTM terdekat (M)</label>
+								<input type="number" class="form-control" name="jarak_hutm_terdekat" step="0.01" required />
+							</div>
+							<div class="form-group">
+								<label>Posisi ujung pohon/dahan</label>
+								<input type="text" class="form-control" name="ujung_pohon" />
+							</div>
+							<div class="form-group">
+								<label>Rekomendasi metode rintis</label>
+								<select name="rekomendasi_penanganan" class="form-control" required>
 									<option value="">Pilih Penanganan</option>
 									<option value="Tebang kandas">Tebang kandas</option>
 									<option value="Rabas-rabas">Rabas-rabas</option>
@@ -117,14 +122,6 @@
 								<?php endforeach ?>
 							</select>
 							<div class="form-group">
-								<label>Tanggal Pengukuran</label>
-								<input type="date" name="tanggal" class="form-control" required>
-							</div>
-							<div class="form-group">
-								<label>Tinggi Pengukuran Saat Ini (M)</label>
-								<input type="number" name="tinggi" class="form-control" step=".01" required>
-							</div>
-							<div class="form-group">
 								<label>Tiang 1</label>
 								<!-- <input type="number" name="latitude" class="form-control" step=".000000001" required> -->
 								<select id="edit-tiang1" name="tiang1" style="width:100%" required>
@@ -139,12 +136,24 @@
 								</select>
 							</div>
 							<div class="form-group">
-								<label>Bentangan Pohon (M)</label>
-								<input type="number" class="form-control" name="bentangan" step="0.01" required/>
+								<label>Tanggal Pengukuran (Biarkan kosong utk tanggal sekarang)</label>
+								<input type="date" name="tanggal_inspeksi" class="form-control">
 							</div>
 							<div class="form-group">
-								<label>Penanganan Pohon</label>
-								<select name="penanganan" class="form-control" required>
+								<label>Tinggi Pengukuran Saat Ini (M)</label>
+								<input type="number" name="tinggi_pengukuran" class="form-control" step=".01" required>
+							</div>
+							<div class="form-group">
+								<label>Posisi pohon dari HUTM terdekat (M)</label>
+								<input type="number" class="form-control" name="jarak_hutm_terdekat" step="0.01" required />
+							</div>
+							<div class="form-group">
+								<label>Posisi ujung pohon/dahan</label>
+								<input type="text" class="form-control" name="ujung_pohon" />
+							</div>
+							<div class="form-group">
+								<label>Rekomendasi metode rintis</label>
+								<select name="rekomendasi_penanganan" class="form-control" required>
 									<option value="">Pilih Penanganan</option>
 									<option value="Tebang kandas">Tebang kandas</option>
 									<option value="Rabas-rabas">Rabas-rabas</option>
@@ -249,7 +258,7 @@ jQuery('#satker').dataTable({
 	'ajax': '" . base_url("ajax/act/inspeksi") . "',
 	'sDom': " . '"' . "<'row'<'col-sm-6'l><'col-sm-6'f>r>t<'row'<'col-sm-6'i><'col-sm-6'p>>" . '"' . ",
 	'sPaginationType': 'full_numbers',
-	'columnDefs': [ { targets: -1, orderable: false },{ targets: -2, orderable: false },{ targets: -6, orderable: false } ]
+	'columnDefs': [ { targets: -1, orderable: false },{ targets: -2, orderable: false },{ targets: 3, orderable: false } ]
 });
 </script>
 ";
@@ -269,8 +278,8 @@ jQuery('#satker').dataTable({
 			}
 		}).done(function(result) {
 			$("#edit_id").val(id);
-			$("#edit input[name='tanggal']").val(result.tanggal);
-			$("#edit input[name='tinggi']").val(result.tinggi);
+			$("#edit input[name='tanggal_inspeksi']").val(result.tanggal_inspeksi);
+			$("#edit input[name='tinggi_pengukuran']").val(result.tinggi_pengukuran);
 
 			$("#edit-tiang1").select2("trigger", "select", {
 				data: {
@@ -285,9 +294,10 @@ jQuery('#satker').dataTable({
 				}
 			});
 
-			$("#edit input[name='bentangan']").val(result.bentangan);
+			$("#edit input[name='jarak_hutm_terdekat']").val(result.jarak_hutm_terdekat);
+			$("#edit select[name='rekomendasi_penanganan']").val(result.rekomendasi_penanganan);
+			$("#edit input[name='ujung_pohon']").val(result.ujung_pohon);
 			$("#edit textarea[name='keterangan']").val(result.keterangan);
-			$("#edit select[name='penanganan']").val(result.penanganan);
 			$("#edit select[name='id_jenis_pohon']").val(result.id_jenis_pohon);
 
 			toggle_edit();

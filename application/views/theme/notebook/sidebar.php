@@ -1,5 +1,5 @@
 <!-- .aside -->
-<aside class="bg-dark lter aside-md hidden-print hidden-xs" id="nav">
+<aside class="bg-dark lter aside-sm hidden-print hidden-xs" id="nav">
 	<section class="vbox">
 		<section class="w-f scrollable">
 			<div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="5px" data-color="#333333">
@@ -25,7 +25,7 @@
 								<i class="fa fa-table icon">
 									<b class="bg-success"></b>
 								</i>
-								<span>Manajemen</span>
+								<span>Kelola</span>
 							</a>
 							<ul class="nav lt">
 								<li <?php if (strpos($_SERVER[REQUEST_URI], 'jenis_pohon') !== false) echo "class='active'" ?>>
