@@ -1,9 +1,9 @@
 <ul class="breadcrumb no-border no-radius b-b b-light pull-in">
 	<li><a href="/"><i class="fa fa-home"></i> Home</a></li>
-	<li><a href="#">Pohon</a></li>
+	<li><a href="#">Inspeksi</a></li>
 </ul>
 <div class="m-b-md">
-	<h3 class="m-b-none">Pohon</h3>
+	<h3 class="m-b-none">Inspeksi</h3>
 </div>
 <section class="panel panel-default">
 	<header class="panel-heading">

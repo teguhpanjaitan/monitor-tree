@@ -54,14 +54,14 @@ class Inspeksi extends CI_Controller
 
 		$data['jenis_pohon'] = $this->tm->get_jenis();
 		$data['tiangs'] = $this->get_tiangs();
-		$template->content = $this->load->view($template->theme . "page/point", $data, true);
+		$template->content = $this->load->view($template->theme . "page/inspeksi", $data, true);
 	}
 
 	public function download()
 	{
 		$str = $this->tm->get_downloaded_csv();
 
-		header('Content-Disposition: attachment; filename="point.csv"');
+		header('Content-Disposition: attachment; filename="inspeksi.csv"');
 		header('Content-Type: text/csv');
 		header('Content-Length: ' . strlen($str));
 		header('Connection: close');
