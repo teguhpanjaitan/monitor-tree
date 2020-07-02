@@ -1,6 +1,6 @@
 <?php
 
-class Point extends CI_Model
+class Inspeksi extends CI_Model
 {
 
     public function exec()
@@ -29,7 +29,7 @@ class Point extends CI_Model
         else $col = "";
 
         $this->db->select("p.*,j.name as nama_jenis_pohon")
-            ->from("point p")
+            ->from("inspeksi p")
             ->join("jenis_pohon j", "p.id_jenis_pohon = j.id", "left")
             ->limit($length, $start)
             ->where("p.deleted = '0'");
@@ -45,7 +45,7 @@ class Point extends CI_Model
         $res = $this->db->get()->result_array();
 
         $this->db->select("COUNT(p.ID) as total")
-            ->from("point p")
+            ->from("inspeksi p")
             ->join("jenis_pohon j", "p.id_jenis_pohon = j.id", "left")
             ->where("p.deleted = '0'");
 

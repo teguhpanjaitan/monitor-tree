@@ -8,7 +8,7 @@
 <section class="panel panel-default">
 	<header class="panel-heading">
 		<a href="#new-data" class="btn btn-success" data-toggle="modal">Tambah Data</a>
-		<a href="<?= base_url("point/download") ?>" class="btn btn-info" >Download</a>
+		<a href="<?= base_url("inspeksi/download") ?>" class="btn btn-info" >Download</a>
 	</header>
 	<div class="table-responsive">
 		<table id="satker" class="table table-striped b-t b-light" data-ride="datatables">
@@ -36,8 +36,8 @@
 			<div class="modal-body">
 				<div class="row">
 					<div class="col-sm-12">
-						<h3 class="m-t-none m-b">Data Point Baru</h3>
-						<form role="form" action="<?php echo base_url("point") ?>" method="post" enctype="multipart/form-data">
+						<h3 class="m-t-none m-b">Data Inspeksi Baru</h3>
+						<form role="form" action="<?php echo base_url("inspeksi") ?>" method="post" enctype="multipart/form-data">
 							<div class="form-group">
 								<label>Nama Jenis Pohon</label>
 								<select name="id_jenis_pohon" class="form-control" required>
@@ -90,7 +90,7 @@
 								<label>Foto</label>
 								<input type="file" name="image" class="form-control">
 							</div>
-							<input type="hidden" name="table" value="point">
+							<input type="hidden" name="table" value="inspeksi">
 							<input type="hidden" name="act" value="tambah_data">
 							<button type="submit" class="btn btn-sm btn-success pull-right text-uc m-t-n-xs"><strong>Tambahkan</strong></button>
 							<button type="button" style="margin-right:10px" onclick='$("#new-data").modal("hide");' class="btn btn-sm btn-warning pull-right text-uc m-t-n-xs"><strong>Batal</strong></button>
@@ -108,8 +108,8 @@
 			<div class="modal-body">
 				<div class="row">
 					<div class="col-sm-12">
-						<h3 class="m-t-none m-b">Edit Point</h3>
-						<form role="form" action="<?php echo base_url("point") ?>" method="post" enctype="multipart/form-data">
+						<h3 class="m-t-none m-b">Edit Inspeksi</h3>
+						<form role="form" action="<?php echo base_url("inspeksi") ?>" method="post" enctype="multipart/form-data">
 							<select name="id_jenis_pohon" class="form-control" required>
 								<option value="">Pilih Jenis Pohon</option>
 								<?php foreach ($jenis_pohon as $jenis) : ?>
@@ -160,7 +160,7 @@
 								<input type="file" name="image" class="form-control">
 							</div>
 							<input type="hidden" id="edit_id" name="ID">
-							<input type="hidden" name="table" value="point">
+							<input type="hidden" name="table" value="inspeksi">
 							<input type="hidden" name="act" value="edit_data">
 							<button type="submit" class="btn btn-sm btn-success pull-right text-uc m-t-n-xs"><strong>Simpan</strong></button>
 							<button type="button" style="margin-right:10px" onclick='$("#edit").modal("hide");' class="btn btn-sm btn-warning pull-right text-uc m-t-n-xs"><strong>Batal</strong></button>
@@ -175,10 +175,10 @@
 <div class="modal fade" id="confirm-delete">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form role="form" method="post" action="<?php echo base_url("point") ?>" class="form-horizontal">
+			<form role="form" method="post" action="<?php echo base_url("inspeksi") ?>" class="form-horizontal">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title">Hapus Point</h4>
+					<h4 class="modal-title">Hapus Inspeksi</h4>
 				</div>
 				<div class="modal-body">
 					<div class="row" style="padding:10px">
@@ -186,7 +186,7 @@
 							<p>Apakah yakin ingin menghapus <b id="message_confirm_delete"></b> ?</p>
 
 							<input type="hidden" id="delete_id" name="id" value="">
-							<input type="hidden" name="table" value="point">
+							<input type="hidden" name="table" value="inspeksi">
 							<input type="hidden" name="act" value="delete">
 						</div>
 					</div>
@@ -246,7 +246,7 @@ $( document ).ready(function() {
 jQuery('#satker').dataTable({
 	'processing': true,
 	'serverSide': true,
-	'ajax': '" . base_url("ajax/act/point") . "',
+	'ajax': '" . base_url("ajax/act/inspeksi") . "',
 	'sDom': " . '"' . "<'row'<'col-sm-6'l><'col-sm-6'f>r>t<'row'<'col-sm-6'i><'col-sm-6'p>>" . '"' . ",
 	'sPaginationType': 'full_numbers',
 	'columnDefs': [ { targets: -1, orderable: false },{ targets: -2, orderable: false },{ targets: -6, orderable: false } ]
@@ -265,7 +265,7 @@ jQuery('#satker').dataTable({
 			dataType: 'json',
 			data: {
 				'id': id,
-				'table': 'point'
+				'table': 'inspeksi'
 			}
 		}).done(function(result) {
 			$("#edit_id").val(id);
@@ -302,7 +302,7 @@ jQuery('#satker').dataTable({
 			dataType: 'json',
 			data: {
 				'id': id,
-				'table': 'point'
+				'table': 'inspeksi'
 			}
 		}).done(function(result) {
 			$("#delete_id").val(id);
