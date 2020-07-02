@@ -51,20 +51,22 @@ DROP TABLE IF EXISTS `inspeksi`;
 CREATE TABLE `inspeksi` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `id_jenis_pohon` int(10) NOT NULL,
-  `segmen` varchar(100) DEFAULT NULL,
-  `tanggal` date NOT NULL,
-  `tinggi` float NOT NULL DEFAULT '0',
+  `segmen` varchar(255) DEFAULT NULL,
+  `tanggal_inspeksi` date NOT NULL,
+  `tinggi_pengukuran` float DEFAULT '0',
+  `tinggi` float DEFAULT '0',
   `latitude` double NOT NULL DEFAULT '0',
   `longitude` double NOT NULL DEFAULT '0',
   `image` varchar(255) DEFAULT '',
   `tiang1` varchar(255) DEFAULT '',
   `tiang2` varchar(255) DEFAULT '',
-  `bentangan` float DEFAULT '0',
-  `penanganan` varchar(255) DEFAULT '',
+  `jarak_hutm_terdekat` float DEFAULT '0',
+  `rekomendasi_penanganan` varchar(255) DEFAULT '',
+  `ujung_pohon` varchar(255) DEFAULT NULL,
   `keterangan` varchar(1020) DEFAULT '',
   `deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,7 +75,6 @@ CREATE TABLE `inspeksi` (
 
 LOCK TABLES `inspeksi` WRITE;
 /*!40000 ALTER TABLE `inspeksi` DISABLE KEYS */;
-INSERT INTO `inspeksi` VALUES (1,1,'segmen-5','2019-12-06',2,0.671621276,99.704031779,'','','',0,'','',0),(7,1,'SEGMENT-YB.03-MAIN41-SAYUR MAINCAT 1','2019-12-06',55,0.671492539,99.704139067,'Screen Shot 2020-03-19 at 06.21.54.png','','',0,'','',0),(8,1,'SEGMENT-YB.03-MAIN5-LARU','2010-03-20',5,0.72735,99.61976667,'Screen Shot 2020-03-18 at 11.15.37.png','TIANG YB.03-MAIN5-0003','TIANG YB.03-MAIN5-0005',0,'','Testing saja',0),(9,1,'SEGMENT-YB.03-MAIN1-PURBA BARU','2020-05-07',10,0.7741416665,99.579125,'','TIANG YB.03-MAIN1-0008','TIANG YB.03-MAIN1-0009',0,'','test saja',0),(10,3,'SEGMENT-YB.03-MAIN1-PURBA BARU','2020-05-07',5,0.77755,99.579525,'','TIANG YB.03-MAIN1-0001','TIANG YB.03-MAIN1-0002',14.5,'Rabas-rabas','Testing dua',0);
 /*!40000 ALTER TABLE `inspeksi` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -87,10 +88,10 @@ DROP TABLE IF EXISTS `jenis_pohon`;
 CREATE TABLE `jenis_pohon` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` text NOT NULL,
-  `meter_per_month` float NOT NULL,
+  `meter_per_month` float DEFAULT NULL,
   `deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -99,7 +100,6 @@ CREATE TABLE `jenis_pohon` (
 
 LOCK TABLES `jenis_pohon` WRITE;
 /*!40000 ALTER TABLE `jenis_pohon` DISABLE KEYS */;
-INSERT INTO `jenis_pohon` VALUES (1,'akasia',0.3,0),(2,'sdfsd',3,1),(3,'86jjj',2,0);
 /*!40000 ALTER TABLE `jenis_pohon` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -140,4 +140,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-07-02 21:10:17
+-- Dump completed on 2020-07-02 23:37:09
