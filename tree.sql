@@ -42,6 +42,35 @@ INSERT INTO `desc_level` VALUES (1,1,'Administrator',0),(2,2,'User',0);
 UNLOCK TABLES;
 
 --
+-- Table structure for table `eksekusi`
+--
+
+DROP TABLE IF EXISTS `eksekusi`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `eksekusi` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `id_inspeksi` int(10) NOT NULL,
+  `tanggal_eksekusi` datetime NOT NULL,
+  `metode_rintis` varchar(255) DEFAULT NULL,
+  `bentangan_pohon` float NOT NULL,
+  `eksekusi_selanjutnya` datetime NOT NULL,
+  `keterangan` varchar(255) DEFAULT NULL,
+  `deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `eksekusi`
+--
+
+LOCK TABLES `eksekusi` WRITE;
+/*!40000 ALTER TABLE `eksekusi` DISABLE KEYS */;
+/*!40000 ALTER TABLE `eksekusi` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `inspeksi`
 --
 
@@ -140,4 +169,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-07-02 23:37:09
+-- Dump completed on 2020-07-03  7:03:05
