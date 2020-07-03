@@ -62,7 +62,7 @@ class Inspeksi extends CI_Model
         $temp = array();
         foreach ($res as $val) {
             $pass_by['id'] = $val['id'];
-            $button = $this->load->view($template->theme . "button/default", $pass_by, true);
+            $button = $this->load->view($template->theme . "button/inspeksi", $pass_by, true);
 
             $t = array();
             $t[] = $val['id'];
