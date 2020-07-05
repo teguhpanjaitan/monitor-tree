@@ -58,11 +58,11 @@ class Bulk_import extends CI_Controller
 				//check data if exist
 				$this->db->select("*")
 					->from("inspeksi")
-					->where("tiang1", $temp[4])
-					->where("tiang2", $temp[5]);
+					->where("tiang1", $temp[6])
+					->where("tiang2", $temp[7]);
 				$result2 = $this->db->get()->result_array();
 
-				$segmen = $this->get_segmen_by_tiang($temp[4]);
+				$segmen = $this->get_segmen_by_tiang($temp[6]);
 
 				if (empty($segmen)) {
 					$errors[] = "Data no {$temp[0]} segmen atau koordinat lokasi tidak ditemukan";
@@ -77,13 +77,13 @@ class Bulk_import extends CI_Controller
 				$data['tanggal_inspeksi'] = $tanggal_inspeksi;
 				$data['tinggi_pengukuran'] = $temp[9];
 				$data['tinggi'] = $temp[9];
-				$temp2 = $this->get_pohon_position($temp[4], $temp[5]);
+				$temp2 = $this->get_pohon_position($temp[6], $temp[7]);
 				$data['latitude'] = $temp2['latitude'];
 				$data['longitude'] = $temp2['longitude'];
-				$data['tiang1'] = $temp[4];
-				$data['tiang2'] = $temp[5];
+				$data['tiang1'] = $temp[6];
+				$data['tiang2'] = $temp[7];
 				$data['jarak_hutm_terdekat'] = $temp[11];
-				$data['rekomendasi_penanganan'] = $temp[12];
+				$data['rekomendasi_penanganan'] = strtolower($temp[12]);
 				$data['ujung_pohon'] = $temp[13];
 				$data['keterangan'] = isset($temp[14]) ? $temp[14] : "";
 
@@ -116,6 +116,7 @@ class Bulk_import extends CI_Controller
 			$data[6] = str_replace(",", '.', $data[6]);
 
 			$temp["name"] = $data[3];
+			$temp["number"] = $data[0];
 			$temp["segment"] = $data[2];
 			$temp["latitude"] = $data[5];
 			$temp["logitude"] = $data[6];
@@ -126,10 +127,10 @@ class Bulk_import extends CI_Controller
 		return $tiangs;
 	}
 
-	private function get_segmen_by_tiang($tiang_name)
+	private function get_segmen_by_tiang($tiang_number)
 	{
 		foreach ($this->tiangs as $tiang) {
-			if ($tiang_name == $tiang['name']) {
+			if ($tiang_number == $tiang['number']) {
 				return $tiang['segment'];
 			}
 		}
@@ -155,13 +156,13 @@ class Bulk_import extends CI_Controller
 			$data[5] = str_replace(",", '.', $data[5]);
 			$data[6] = str_replace(",", '.', $data[6]);
 
-			if ($data[3] === $tiang1) {
+			if ($data[0] === $tiang1) {
 				$tiang1_pos["latitude"] = floatval($data[5]);
 				$tiang1_pos["longitude"] = floatval($data[6]);
 				$pos_t1 = true;
 			}
 
-			if ($data[3] === $tiang2) {
+			if ($data[0] === $tiang2) {
 				$tiang2_pos["latitude"] = floatval($data[5]);
 				$tiang2_pos["longitude"] = floatval($data[6]);
 				$pos_t2 = true;

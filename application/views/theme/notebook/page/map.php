@@ -165,8 +165,8 @@ $template->footer_add = "<script src='https://unpkg.com/@google/markerclustererp
 				$.each(result, function(i, val) {
 					content = "";
 					if (zoom > zoomLimit) {
+						content += "<p>Nomor Tiang : " + val[0] + "</p>";
 						content += "<p>Kode Hantaran : " + val[2] + "</p>";
-						content += "<p>Description : " + val[3] + "</p>";
 						addPMarker(val[5], val[6], content, "<?php echo base_url("assets/icons/pole.png") ?>");
 					} else {
 						content += "<p>Group Kode Hantaran : " + val[2] + "</p>";

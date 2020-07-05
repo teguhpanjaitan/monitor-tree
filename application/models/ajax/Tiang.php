@@ -75,6 +75,10 @@ class Tiang extends CI_Model
             while (!feof($file)) {
                 $data = fgetcsv($file, 0, ';');
 
+                if(empty($data[0])){
+                    continue;
+                }
+                
                 //latitude part
                 $data[5] = str_replace(",",".",$data[5]);
                 $data[5] = floatval($data[5]);

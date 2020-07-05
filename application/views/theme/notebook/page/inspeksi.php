@@ -49,17 +49,17 @@
 								</select>
 							</div>
 							<div class="form-group">
-								<label>Tiang 1</label>
+								<label>No. Tiang 1</label>
 								<!-- <input type="number" name="latitude" class="form-control" step=".000000001" required> -->
 								<select id="new-tiang1" name="tiang1" style="width:100%" required>
-									<option value="">Input Tiang 1</option>
+									<option value="">Input Nomor Tiang 1</option>
 								</select>
 							</div>
 							<div class="form-group">
-								<label>Tiang 2</label>
+								<label>No. Tiang 2</label>
 								<!-- <input type="number" name="longitude" class="form-control" step=".000000001" required> -->
 								<select id="new-tiang2" name="tiang2" style="width:100%" required>
-									<option value="">Input Tiang 2</option>
+									<option value="">Input Nomor Tiang 2</option>
 								</select>
 							</div>
 							<div class="form-group">
@@ -82,9 +82,9 @@
 								<label>Rekomendasi metode rintis</label>
 								<select name="rekomendasi_penanganan" class="form-control" required>
 									<option value="">Pilih Penanganan</option>
-									<option value="Tebang kandas">Tebang kandas</option>
-									<option value="Rabas-rabas">Rabas-rabas</option>
-									<option value="Diracun">Diracun</option>
+									<option value="tebang kandas">Tebang kandas</option>
+									<option value="rabas-rabas">Rabas-rabas</option>
+									<option value="diracun">Diracun</option>
 								</select>
 							</div>
 							<div class="form-group">
@@ -122,17 +122,17 @@
 								<?php endforeach ?>
 							</select>
 							<div class="form-group">
-								<label>Tiang 1</label>
+								<label>No. Tiang 1</label>
 								<!-- <input type="number" name="latitude" class="form-control" step=".000000001" required> -->
 								<select id="edit-tiang1" name="tiang1" style="width:100%" required>
-									<option value="">Input Tiang 1</option>
+									<option value="">Input Nomor Tiang 1</option>
 								</select>
 							</div>
 							<div class="form-group">
-								<label>Tiang 2</label>
+								<label>No. Tiang 2</label>
 								<!-- <input type="number" name="longitude" class="form-control" step=".000000001" required> -->
 								<select id="edit-tiang2" name="tiang2" style="width:100%" required>
-									<option value="">Input Tiang 2</option>
+									<option value="">Input Nomor Tiang 2</option>
 								</select>
 							</div>
 							<div class="form-group">
@@ -155,9 +155,9 @@
 								<label>Rekomendasi metode rintis</label>
 								<select name="rekomendasi_penanganan" class="form-control" required>
 									<option value="">Pilih Penanganan</option>
-									<option value="Tebang kandas">Tebang kandas</option>
-									<option value="Rabas-rabas">Rabas-rabas</option>
-									<option value="Diracun">Diracun</option>
+									<option value="tebang kandas">Tebang kandas</option>
+									<option value="rabas-rabas">Rabas-rabas</option>
+									<option value="diracun">Diracun</option>
 								</select>
 							</div>
 							<div class="form-group">
@@ -219,7 +219,7 @@ $template->footer_add = "
 <script>
 $( document ).ready(function() {
 	$('#new-tiang1').select2({
-		minimumInputLength: 5,
+		minimumInputLength: 3,
 		ajax: {
 			delay: 800,
 			url: '" .  base_url("ajax/act/dropdown_tiang") . "',
@@ -227,7 +227,7 @@ $( document ).ready(function() {
 		}
 	});
 	$('#new-tiang2').select2({
-		minimumInputLength: 5,
+		minimumInputLength: 3,
 		ajax: {
 			delay: 800,
 			url: '" .  base_url("ajax/act/dropdown_tiang") . "',
@@ -235,7 +235,7 @@ $( document ).ready(function() {
 		}
 	});
 	$('#edit-tiang1').select2({
-		minimumInputLength: 5,
+		minimumInputLength: 3,
 		ajax: {
 			delay: 800,
 			url: '" .  base_url("ajax/act/dropdown_tiang") . "',
@@ -243,7 +243,7 @@ $( document ).ready(function() {
 		}
 	});
 	$('#edit-tiang2').select2({
-		minimumInputLength: 5,
+		minimumInputLength: 3,
 		ajax: {
 			delay: 800,
 			url: '" .  base_url("ajax/act/dropdown_tiang") . "',

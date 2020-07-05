@@ -31,6 +31,7 @@ class Inspeksi extends CI_Controller
 			$post['longitude'] = $temp['longitude'];
 			$post['segmen'] = $this->get_tiang_segmen($tiang1);
 			$post['tinggi'] = $post['tinggi_pengukuran'];
+			$post['rekomendasi_penanganan'] = strtolower($post['rekomendasi_penanganan']);
 
 			if (empty($post['tanggal_inspeksi'])) {
 				$post['tanggal_inspeksi'] = date('Y-m-d H:i:s');
@@ -49,6 +50,7 @@ class Inspeksi extends CI_Controller
 			$post['longitude'] = $temp['longitude'];
 			$post['segmen'] = $this->get_tiang_segmen($tiang1);
 			$post['tinggi'] = $post['tinggi_pengukuran'];
+			$post['rekomendasi_penanganan'] = strtolower($post['rekomendasi_penanganan']);
 
 			if (empty($post['tanggal_inspeksi'])) {
 				$post['tanggal_inspeksi'] = date('Y-m-d H:i:s');
@@ -114,13 +116,13 @@ class Inspeksi extends CI_Controller
 			$data[5] = str_replace(",", '.', $data[5]);
 			$data[6] = str_replace(",", '.', $data[6]);
 
-			if ($data[3] === $tiang1) {
+			if ($data[0] === $tiang1) {
 				$tiang1_pos["latitude"] = floatval($data[5]);
 				$tiang1_pos["longitude"] = floatval($data[6]);
 				$pos_t1 = true;
 			}
 
-			if ($data[3] === $tiang2) {
+			if ($data[0] === $tiang2) {
 				$tiang2_pos["latitude"] = floatval($data[5]);
 				$tiang2_pos["longitude"] = floatval($data[6]);
 				$pos_t2 = true;
