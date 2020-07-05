@@ -62,10 +62,9 @@ class Bulk_import extends CI_Controller
 					->where("tiang2", $temp[5]);
 				$result2 = $this->db->get()->result_array();
 
-				$location = $this->get_location_by_tiang($temp[4]);
 				$segmen = $this->get_segmen_by_tiang($temp[4]);
 
-				if (empty($segmen) || count($location) == 0) {
+				if (empty($segmen)) {
 					$errors[] = "Data no {$temp[0]} segmen atau koordinat lokasi tidak ditemukan";
 					continue;
 				}
@@ -78,8 +77,9 @@ class Bulk_import extends CI_Controller
 				$data['tanggal_inspeksi'] = $tanggal_inspeksi;
 				$data['tinggi_pengukuran'] = $temp[9];
 				$data['tinggi'] = $temp[9];
-				$data['latitude'] = $location[0];
-				$data['longitude'] = $location[1];
+				$temp2 = $this->get_pohon_position($temp[4], $temp[5]);
+				$data['latitude'] = $temp2['latitude'];
+				$data['longitude'] = $temp2['longitude'];
 				$data['tiang1'] = $temp[4];
 				$data['tiang2'] = $temp[5];
 				$data['jarak_hutm_terdekat'] = $temp[11];
@@ -137,14 +137,57 @@ class Bulk_import extends CI_Controller
 		return '';
 	}
 
-	private function get_location_by_tiang($tiang_name)
+	private function get_pohon_position($tiang1, $tiang2)
 	{
-		foreach ($this->tiangs as $tiang) {
-			if ($tiang_name == $tiang['name']) {
-				return [$tiang['latitude'], $tiang['logitude']];
+		$file = fopen("tiang.csv", "r");
+		fgetcsv($file); //ignore first line
+
+		$tiang1_pos = [];
+		$tiang2_pos = [];
+		$position = ['latitude' => 0, 'longitude' => 0];
+		$pos_t1 = false;
+		$pos_t2 = false;
+
+		//get both position
+		while (!feof($file)) {
+			$data = fgetcsv($file, 0, ';');
+
+			$data[5] = str_replace(",", '.', $data[5]);
+			$data[6] = str_replace(",", '.', $data[6]);
+
+			if ($data[3] === $tiang1) {
+				$tiang1_pos["latitude"] = floatval($data[5]);
+				$tiang1_pos["longitude"] = floatval($data[6]);
+				$pos_t1 = true;
+			}
+
+			if ($data[3] === $tiang2) {
+				$tiang2_pos["latitude"] = floatval($data[5]);
+				$tiang2_pos["longitude"] = floatval($data[6]);
+				$pos_t2 = true;
+			}
+
+			if ($pos_t1 && $pos_t2) {
+				break;
 			}
 		}
 
-		return [];
+		//caculate mid point
+		$dLon = deg2rad($tiang2_pos["longitude"] - $tiang1_pos["longitude"]);
+
+		//convert to radians
+		$lat1 = deg2rad($tiang1_pos["latitude"]);
+		$lat2 = deg2rad($tiang2_pos["latitude"]);
+		$lon1 = deg2rad($tiang1_pos["longitude"]);
+
+		$Bx = cos($lat2) * cos($dLon);
+		$By = cos($lat2) * sin($dLon);
+		$position['latitude'] = rad2deg(atan2(sin($lat1) + sin($lat2), sqrt((cos($lat1) + $Bx) * (cos($lat1) + $Bx) + $By * $By)));
+		$position['longitude'] = rad2deg($lon1 + atan2($By, cos($lat1) + $Bx));
+
+		$position['latitude'] = round($position['latitude'], 10);
+		$position['longitude'] = round($position['longitude'], 10);
+
+		return $position;
 	}
 }
