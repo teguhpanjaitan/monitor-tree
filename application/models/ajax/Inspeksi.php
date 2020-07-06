@@ -42,7 +42,9 @@ class Inspeksi extends CI_Model
 
         if (!empty($search['value'])) {
             $this->db->where("j.name LIKE '%$search[value]%'")
-                ->or_where("p.segmen LIKE '%$search[value]%'");
+                ->or_where("p.segmen LIKE '%$search[value]%'")
+                ->or_where("p.tiang1 LIKE '%$search[value]%'")
+                ->or_where("p.tiang2 LIKE '%$search[value]%'");
         }
 
         $res = $this->db->get()->result_array();
@@ -55,7 +57,9 @@ class Inspeksi extends CI_Model
 
         if (!empty($search['value'])) {
             $this->db->where("j.name LIKE '%$search[value]%'")
-                ->or_where("p.segmen LIKE '%$search[value]%'");
+                ->or_where("p.segmen LIKE '%$search[value]%'")
+                ->or_where("p.tiang1 LIKE '%$search[value]%'")
+                ->or_where("p.tiang2 LIKE '%$search[value]%'");
         }
 
         $tot = $this->db->get()->result_array();
@@ -69,7 +73,7 @@ class Inspeksi extends CI_Model
             $t[] = $val['id'];
             $t[] = date("d-m-Y", strtotime($val['tanggal_inspeksi']));
             $t[] = $val['nama_jenis_pohon'];
-            $t[] = "Tiang 1:<br>{$val['tiang1']}<br> Tiang 2:<br>{$val['tiang2']}";
+            $t[] = "Tiang 1: {$val['tiang1']}<br>Tiang 2: {$val['tiang2']}";
             $t[] = ($val['tinggi_pengukuran'] == 0) ? "" : $val['tinggi_pengukuran'] . " M";
             $t[] = ($val['jarak_hutm_terdekat'] == 0) ? "" : $val['jarak_hutm_terdekat'] . " M";
             $t[] = $val['rekomendasi_penanganan'];

@@ -19,15 +19,18 @@ class Bulk_import extends CI_Controller
 		$act = empty($act) ? $this->input->get("act") : $act;
 
 		$data = [];
-		if ($act == 'import') {
+		if ($act == 'import-inspeksi') {
 			$this->tiangs = $this->load_tiang();
-			$data = $this->import();
+			$data = $this->import_inspeksi();
+		} else if ($act == 'import-eksekusi') {
+			$this->tiangs = $this->load_tiang();
+			$data = $this->import_eksekusi();
 		}
 
 		$template->content = $this->load->view($template->theme . "page/bulk_import", $data, true);
 	}
 
-	private function import()
+	private function import_inspeksi()
 	{
 		$return = ['errors' => ""];
 
@@ -111,6 +114,67 @@ class Bulk_import extends CI_Controller
 					$this->crud->update_data($data, 'inspeksi');
 				} else {
 					$this->crud->tambah_data($data, 'inspeksi');
+				}
+			}
+			fclose($handle);
+		} else {
+			$errors[] = "Error ketika membuka file. Mohon periksa kembali file dalam bentuk csv atau lainnya";
+		}
+
+		$return['errors'] = $errors;
+		return $return;
+	}
+
+	private function import_eksekusi()
+	{
+		$return = ['errors' => ""];
+
+		if (($handle = fopen($_FILES["file"]["tmp_name"], "r")) !== FALSE) {
+			fgetcsv($handle, 1000, ";");
+			$errors = [];
+
+			while (($temp = fgetcsv($handle, 1000, ";")) !== FALSE) {
+				if (empty($temp[1]) || $temp[1] == '0') {
+					continue;
+				}
+
+				$this->db->select("*")
+					->from("pohon")
+					->where("tiang1", $temp[4])
+					->where("tiang2", $temp[5])
+					->where("deleted", 0);
+
+				$result_pohon = $this->db->get()->result_array();
+
+				if (count($result_pohon) == 0) {
+					continue;
+				}
+
+				$dateTime = DateTime::createFromFormat('d/m/Y', $temp[8]);
+				$tanggal_eksekusi = $dateTime->format('Y-m-d');
+
+				$data = [];
+				$data['id_pohon'] = $result_pohon[0]['id'];
+				$data['tanggal_eksekusi'] = $tanggal_eksekusi;
+				$data['metode_rintis'] = strtolower($temp[6]);
+				$data['bentangan_pohon'] = $temp[7];
+				$data['eksekusi_selanjutnya'] = $this->get_eksekusi_selanjutnya($temp);
+
+				//check data if exist
+				$this->db->select("e.*")
+					->from("eksekusi e")
+					->join("pohon p", "p.id = e.id_pohon", "left")
+					->where("e.tanggal_eksekusi", $tanggal_eksekusi)
+					->where("p.tiang1", $temp[4])
+					->where("p.tiang2", $temp[5])
+					->where("e.deleted", 0);
+				$result_eksekusi = $this->db->get()->result_array();
+
+				if (count($result_eksekusi)) {
+					$data['ID'] = $result_eksekusi[0]['id'];
+					$this->crud->update_data($data, 'eksekusi');
+				} else {
+					$this->crud->tambah_data($data, 'eksekusi');
 				}
 			}
 			fclose($handle);
@@ -209,5 +273,10 @@ class Bulk_import extends CI_Controller
 		$position['longitude'] = round($position['longitude'], 10);
 
 		return $position;
+	}
+
+	private function get_eksekusi_selanjutnya($data)
+	{
+		return "2022-12-14 00:00:00";
 	}
 }

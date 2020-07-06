@@ -18,16 +18,16 @@ class Eksekusi extends CI_Model
         $search = $this->input->get('search');
         $search = $this->db->escape_str($search);
 
-        if ($col == "0") $col = "id";
-        else if ($col == "1") $col = "nama_jenis_pohon";
+        if ($col == "0") $col = "e.id";
+        else if ($col == "1") $col = "j.name";
         else if ($col == "2") $col = "";
-        else if ($col == "3") $col = "metode_rintis";
-        else if ($col == "4") $col = "bentangan_pohon";
-        else if ($col == "5") $col = "tanggal_eksekusi";
-        else if ($col == "6") $col = "eksekusi_selanjutnya";
+        else if ($col == "3") $col = "e.metode_rintis";
+        else if ($col == "4") $col = "e.bentangan_pohon";
+        else if ($col == "5") $col = "e.tanggal_eksekusi";
+        else if ($col == "6") $col = "e.eksekusi_selanjutnya";
         else $col = "";
 
-        $this->db->select("e.*,j.name as nama_jenis_pohon")
+        $this->db->select("e.id,p.tiang1,p.tiang2,e.metode_rintis,e.bentangan_pohon,e.tanggal_eksekusi,e.eksekusi_selanjutnya,j.name as nama_jenis_pohon")
             ->from("eksekusi e")
             ->join("pohon p", "p.id = e.id_pohon", "left")
             ->join("jenis_pohon j", "p.id_jenis_pohon = j.id", "left")
@@ -67,7 +67,7 @@ class Eksekusi extends CI_Model
             $t = array();
             $t[] = $val['id'];
             $t[] = $val['nama_jenis_pohon'];
-            $t[] = "Tiang 1:<br>{$val['tiang1']}<br> Tiang 2:<br>{$val['tiang2']}";
+            $t[] = "Tiang 1: {$val['tiang1']}<br> Tiang 2: {$val['tiang2']}";
             $t[] = $val['metode_rintis'];
             $t[] = ($val['bentangan_pohon'] == 0) ? "" : $val['bentangan_pohon'] . " M";
             $t[] = date("d-m-Y", strtotime($val['tanggal_eksekusi']));
