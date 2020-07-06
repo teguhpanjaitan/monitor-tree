@@ -50,7 +50,7 @@ DROP TABLE IF EXISTS `eksekusi`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `eksekusi` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `id_inspeksi` int(10) NOT NULL,
+  `id_pohon` int(10) NOT NULL,
   `tanggal_eksekusi` datetime NOT NULL,
   `metode_rintis` varchar(255) DEFAULT NULL,
   `bentangan_pohon` float NOT NULL,
@@ -79,16 +79,10 @@ DROP TABLE IF EXISTS `inspeksi`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `inspeksi` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `id_jenis_pohon` int(10) NOT NULL,
-  `segmen` varchar(255) DEFAULT NULL,
+  `id_pohon` int(10) NOT NULL,
   `tanggal_inspeksi` date NOT NULL,
   `tinggi_pengukuran` float DEFAULT '0',
-  `tinggi` float DEFAULT '0',
-  `latitude` double NOT NULL DEFAULT '0',
-  `longitude` double NOT NULL DEFAULT '0',
   `image` varchar(255) DEFAULT '',
-  `tiang1` varchar(255) DEFAULT '',
-  `tiang2` varchar(255) DEFAULT '',
   `jarak_hutm_terdekat` float DEFAULT '0',
   `rekomendasi_penanganan` varchar(255) DEFAULT '',
   `ujung_pohon` varchar(255) DEFAULT NULL,
@@ -133,6 +127,36 @@ LOCK TABLES `jenis_pohon` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `pohon`
+--
+
+DROP TABLE IF EXISTS `pohon`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `pohon` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `id_jenis_pohon` int(10) NOT NULL,
+  `tiang1` varchar(255) NOT NULL,
+  `tiang2` varchar(255) NOT NULL,
+  `segmen` varchar(255) DEFAULT NULL,
+  `latitude` double DEFAULT '0',
+  `longitude` double DEFAULT '0',
+  `tinggi` float DEFAULT NULL,
+  `deleted` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pohon`
+--
+
+LOCK TABLES `pohon` WRITE;
+/*!40000 ALTER TABLE `pohon` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pohon` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `users`
 --
 
@@ -147,7 +171,7 @@ CREATE TABLE `users` (
   `level` tinyint(1) DEFAULT '2',
   `active` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -156,7 +180,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Teguh putra utama ST','teguh','$2y$10$Erg6F.2kIeO50ax5oKvrDOiZwrjWXSJlUnqOOk.j9YxSP6eGba6WW',1,1),(12,'Tama testing','tamapnj','$2y$10$kPqArrL/xXNJu.rl925PYeiQBmr.UGbxqaaZtBnIOHdh9k2rrxX4m',1,1),(13,'tama teging','tama123','$2y$10$xIMGMkwoEJVvmWO8e/KoL.AelnVfzK/5KKxzSDEO0IkcdpMYAHeu2',1,1);
+INSERT INTO `users` VALUES (1,'Teguh putra utama ST','teguh','$2y$10$Erg6F.2kIeO50ax5oKvrDOiZwrjWXSJlUnqOOk.j9YxSP6eGba6WW',1,1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -169,4 +193,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-07-03  7:03:05
+-- Dump completed on 2020-07-06 19:59:33
