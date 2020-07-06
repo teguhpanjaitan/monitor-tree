@@ -36,8 +36,6 @@ class Bulk_import extends CI_Controller
 			$errors = [];
 
 			while (($temp = fgetcsv($handle, 1000, ";")) !== FALSE) {
-				$data = [];
-
 				if (empty($temp[1]) || $temp[1] == '0') {
 					continue;
 				}
@@ -55,13 +53,6 @@ class Bulk_import extends CI_Controller
 
 				$result_jenis_pohon = $result_jenis_pohon[0];
 
-				//check data if exist
-				$this->db->select("*")
-					->from("inspeksi")
-					->where("tiang1", $temp[6])
-					->where("tiang2", $temp[7]);
-				$result2 = $this->db->get()->result_array();
-
 				$segmen = $this->get_segmen_by_tiang($temp[6]);
 
 				if (empty($segmen)) {
@@ -72,23 +63,51 @@ class Bulk_import extends CI_Controller
 				$dateTime = DateTime::createFromFormat('d/m/Y', $temp[8]);
 				$tanggal_inspeksi = $dateTime->format('Y-m-d');
 
+				$data = [];
 				$data['id_jenis_pohon'] = $result_jenis_pohon['id'];
 				$data['segmen'] = $segmen;
-				$data['tanggal_inspeksi'] = $tanggal_inspeksi;
-				$data['tinggi_pengukuran'] = $temp[9];
 				$data['tinggi'] = $temp[9];
 				$temp2 = $this->get_pohon_position($temp[6], $temp[7]);
 				$data['latitude'] = $temp2['latitude'];
 				$data['longitude'] = $temp2['longitude'];
 				$data['tiang1'] = $temp[6];
 				$data['tiang2'] = $temp[7];
+
+				//check data if exist
+				$this->db->select("*")
+					->from("pohon")
+					->where("tiang1", $temp[6])
+					->where("tiang2", $temp[7])
+					->where("deleted", 0);
+				$result_pohon = $this->db->get()->result_array();
+
+				$id_pohon = 0;
+				if (count($result_pohon)) {
+					$data['ID'] = $result_pohon[0]['id'];
+					$this->crud->update_data($data, 'pohon');
+					$id_pohon = $result_pohon[0]['id'];
+				} else {
+					$id_pohon = $this->crud->tambah_data($data, 'pohon');
+				}
+
+				$data = [];
+				$data['id_pohon'] = $id_pohon;
+				$data['tanggal_inspeksi'] = $tanggal_inspeksi;
+				$data['tinggi_pengukuran'] = $temp[9];
 				$data['jarak_hutm_terdekat'] = $temp[11];
 				$data['rekomendasi_penanganan'] = strtolower($temp[12]);
 				$data['ujung_pohon'] = $temp[13];
 				$data['keterangan'] = isset($temp[14]) ? $temp[14] : "";
 
-				if (count($result2)) {
-					$data['ID'] = $result2[0]['id'];
+				//check data if exist
+				$this->db->select("*")
+					->from("inspeksi")
+					->where("id_pohon", $id_pohon)
+					->where("deleted", 0);
+				$result_inspeksi = $this->db->get()->result_array();
+
+				if (count($result_inspeksi)) {
+					$data['ID'] = $result_inspeksi[0]['id'];
 					$this->crud->update_data($data, 'inspeksi');
 				} else {
 					$this->crud->tambah_data($data, 'inspeksi');

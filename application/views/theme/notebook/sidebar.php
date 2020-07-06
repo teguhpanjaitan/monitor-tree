@@ -17,6 +17,7 @@
 						</li>
 						<li <?php if (
 								strpos($_SERVER[REQUEST_URI], 'jenis_pohon') !== false
+								|| strpos($_SERVER[REQUEST_URI], 'pohon') !== false 
 								|| strpos($_SERVER[REQUEST_URI], 'inspeksi') !== false 
 								|| strpos($_SERVER[REQUEST_URI], 'eksekusi') !== false 
 								|| strpos($_SERVER[REQUEST_URI], 'bulk_import') !== false
@@ -32,6 +33,14 @@
 									<a href="/jenis_pohon">
 										<i class="fa fa-angle-right"></i>
 										<span>Jenis Pohon</span>
+									</a>
+								</li>
+							</ul>
+							<ul class="nav lt">
+								<li <?php if (strpos($_SERVER[REQUEST_URI], 'the_pohon') !== false) echo "class='active'" ?>>
+									<a href="/the_pohon">
+										<i class="fa fa-angle-right"></i>
+										<span>Pohon</span>
 									</a>
 								</li>
 							</ul>
