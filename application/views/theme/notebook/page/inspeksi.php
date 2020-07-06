@@ -8,7 +8,7 @@
 <section class="panel panel-default">
 	<header class="panel-heading">
 		<a href="#new-data" class="btn btn-success" data-toggle="modal">Tambah Data</a>
-		<!-- <a href="<?= base_url("inspeksi/download") ?>" class="btn btn-info">Download</a> -->
+		<a href="<?= base_url("inspeksi/download") ?>" class="btn btn-info">Download</a>
 	</header>
 	<div class="table-responsive">
 		<table id="satker" class="table table-striped b-t b-light" data-ride="datatables">
