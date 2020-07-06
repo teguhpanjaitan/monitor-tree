@@ -29,8 +29,8 @@ class Eksekusi extends CI_Model
 
         $this->db->select("e.*,j.name as nama_jenis_pohon")
             ->from("eksekusi e")
-            ->join("inspeksi i", "i.id = e.id_inspeksi", "left")
-            ->join("jenis_pohon j", "i.id_jenis_pohon = j.id", "left")
+            ->join("pohon p", "p.id = e.id_pohon", "left")
+            ->join("jenis_pohon j", "p.id_jenis_pohon = j.id", "left")
             ->limit($length, $start)
             ->where("e.deleted = '0'");
 
@@ -39,22 +39,22 @@ class Eksekusi extends CI_Model
 
         if (!empty($search['value'])) {
             $this->db->where("j.name LIKE '%$search[value]%'")
-                ->or_where("i.tiang1 LIKE '%$search[value]%'")
-                ->or_where("i.tiang2 LIKE '%$search[value]%'");
+                ->or_where("p.tiang1 LIKE '%$search[value]%'")
+                ->or_where("p.tiang2 LIKE '%$search[value]%'");
         }
 
         $res = $this->db->get()->result_array();
 
         $this->db->select("COUNT(e.ID) as total")
             ->from("eksekusi e")
-            ->join("inspeksi i", "i.id = e.id_inspeksi", "left")
-            ->join("jenis_pohon j", "i.id_jenis_pohon = j.id", "left")
+            ->join("pohon p", "p.id = e.id_pohon", "left")
+            ->join("jenis_pohon j", "p.id_jenis_pohon = j.id", "left")
             ->where("e.deleted = '0'");
 
         if (!empty($search['value'])) {
             $this->db->where("j.name LIKE '%$search[value]%'")
-                ->or_where("i.tiang1 LIKE '%$search[value]%'")
-                ->or_where("i.tiang2 LIKE '%$search[value]%'");
+                ->or_where("p.tiang1 LIKE '%$search[value]%'")
+                ->or_where("p.tiang2 LIKE '%$search[value]%'");
         }
 
         $tot = $this->db->get()->result_array();

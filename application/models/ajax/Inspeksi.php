@@ -6,7 +6,6 @@ class Inspeksi extends CI_Model
     public function exec()
     {
         global $template;
-        // $this->load->model("global_model","gm");
         $get = $this->input->get();
         $length = $get['length'];
         $length = $this->db->escape_str($length);
@@ -19,7 +18,7 @@ class Inspeksi extends CI_Model
         $search = $this->input->get('search');
         $search = $this->db->escape_str($search);
 
-        if ($col == "0") $col = "id";
+        if ($col == "0") $col = "i.id";
         else if ($col == "1") $col = "tanggal_inspeksi";
         else if ($col == "2") $col = "nama_jenis_pohon";
         else if ($col == "3") $col = "";
@@ -31,8 +30,9 @@ class Inspeksi extends CI_Model
         else if ($col == "9") $col = "";
         else $col = "";
 
-        $this->db->select("p.*,j.name as nama_jenis_pohon")
-            ->from("inspeksi p")
+        $this->db->select("p.*,i.*,j.name as nama_jenis_pohon")
+            ->from("inspeksi i")
+            ->join("pohon p", "p.id = i.id_pohon", "left")
             ->join("jenis_pohon j", "p.id_jenis_pohon = j.id", "left")
             ->limit($length, $start)
             ->where("p.deleted = '0'");
@@ -47,10 +47,11 @@ class Inspeksi extends CI_Model
 
         $res = $this->db->get()->result_array();
 
-        $this->db->select("COUNT(p.ID) as total")
-            ->from("inspeksi p")
+        $this->db->select("COUNT(i.ID) as total")
+            ->from("inspeksi i")
+            ->join("pohon p", "p.id = i.id_pohon", "left")
             ->join("jenis_pohon j", "p.id_jenis_pohon = j.id", "left")
-            ->where("p.deleted = '0'");
+            ->where("i.deleted = '0'");
 
         if (!empty($search['value'])) {
             $this->db->where("j.name LIKE '%$search[value]%'")
