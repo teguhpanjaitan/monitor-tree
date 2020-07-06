@@ -29,7 +29,7 @@ class TreeModel extends CI_Model
         return $this->db->get()->result_array();
     }
 
-    public function get_downloaded_csv()
+    public function get_downloaded_inspeksi_csv()
     {
         $this->db->select("jp.name as jenis_pohon,i.*,p.*")
             ->from("inspeksi as i")
@@ -55,6 +55,34 @@ class TreeModel extends CI_Model
             $csv .= '"' . $result['jarak_hutm_terdekat'] . '";';
             $csv .= '"' . $result['rekomendasi_penanganan'] . '";';
             $csv .= '"' . $result['ujung_pohon'] . '";';
+            $csv .= "\r\n";
+        }
+
+        return $csv;
+    }
+
+    public function get_downloaded_eksekusi_csv()
+    {
+        $this->db->select("e.id,p.tiang1,p.tiang2,e.metode_rintis,e.bentangan_pohon,e.tanggal_eksekusi,e.eksekusi_selanjutnya,jp.name as nama_jenis_pohon")
+            ->from("eksekusi as e")
+            ->join("pohon as p", "p.id = e.id_pohon", "left")
+            ->join("jenis_pohon as jp", "jp.id = p.id_jenis_pohon", "left")
+            ->where("e.deleted", "0");
+
+        $results = $this->db->get()->result_array();
+
+        $csv = '"ID/No";"Jenis Pohon";"Penyulang";"Alamat";"No Tiang 1";"No Tiang 2";"Metode Rintis";"Bentangan Pohon (M)";"Eksekusi Terakhir";"Eksekusi Selanjutnya"' . "\r\n";
+        foreach ($results as $result) {
+            $csv .= '"' . $result['id'] . '";';
+            $csv .= '"' . $result['nama_jenis_pohon'] . '";';
+            $csv .= '"' . $this->get_penyulang($result['tiang1']) . '";';
+            $csv .= '"' . $this->get_tiang_alamat($result['tiang1']) . '";';
+            $csv .= '"' . $result['tiang1'] . '";';
+            $csv .= '"' . $result['tiang2'] . '";';
+            $csv .= '"' . $result['metode_rintis'] . '";';
+            $csv .= '"' . $result['bentangan_pohon'] . '";';
+            $csv .= '"' . date("m/d/Y", strtotime($result['tanggal_eksekusi'])) . '";';
+            $csv .= '"' . date("m/d/Y", strtotime($result['eksekusi_selanjutnya'])) . '";';
             $csv .= "\r\n";
         }
 

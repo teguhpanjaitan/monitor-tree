@@ -7,7 +7,7 @@
 </div>
 <section class="panel panel-default">
 	<header class="panel-heading">
-		&nbsp;
+		<a href="<?= base_url("eksekusi/download") ?>" class="btn btn-info">Download</a>
 	</header>
 	<div class="table-responsive">
 		<table id="satker" class="table table-striped b-t b-light" data-ride="datatables">

@@ -46,25 +46,16 @@ class Eksekusi extends CI_Controller
 		$template->content = $this->load->view($template->theme . "page/eksekusi", $data, true);
 	}
 
-	public function create($id_inspeksi = 0)
+	public function download()
 	{
-		$post = $this->input->post();
-		unset($post['act']);
-		$table = $post['table'];
-		unset($post['table']);
+		$str = $this->tm->get_downloaded_eksekusi_csv();
 
-		$tiang1 = $this->input->post("tiang1");
-		$tiang2 = $this->input->post("tiang2");
-		$temp = $this->get_pohon_position($tiang1, $tiang2);
-		$post['latitude'] = $temp['latitude'];
-		$post['longitude'] = $temp['longitude'];
-		$post['segmen'] = $this->get_tiang_segmen($tiang1);
-		$post['tinggi'] = $post['tinggi_pengukuran'];
+		header('Content-Disposition: attachment; filename="eksekusi.csv"');
+		header('Content-Type: text/csv');
+		header('Content-Length: ' . strlen($str));
+		header('Connection: close');
 
-		if (empty($post['tanggal_inspeksi'])) {
-			$post['tanggal_inspeksi'] = date('Y-m-d H:i:s');
-		}
-
-		$this->crud->tambah_data($post, $table);
+		echo $str;
+		exit();
 	}
 }

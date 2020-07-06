@@ -70,7 +70,7 @@ class Inspeksi extends CI_Controller
 
 	public function download()
 	{
-		$str = $this->tm->get_downloaded_csv();
+		$str = $this->tm->get_downloaded_inspeksi_csv();
 
 		header('Content-Disposition: attachment; filename="inspeksi.csv"');
 		header('Content-Type: text/csv');
