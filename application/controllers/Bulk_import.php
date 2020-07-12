@@ -150,6 +150,10 @@ class Bulk_import extends CI_Controller
 					continue;
 				}
 
+				if(empty($temp[8])){
+					continue;
+				}
+				
 				$dateTime = DateTime::createFromFormat('d/m/Y', $temp[8]);
 				$tanggal_eksekusi = $dateTime->format('Y-m-d');
 
