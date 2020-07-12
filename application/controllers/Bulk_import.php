@@ -138,33 +138,36 @@ class Bulk_import extends CI_Controller
 					continue;
 				}
 
-				$this->db->select("*")
-					->from("pohon")
-					->where("tiang1", $temp[4])
-					->where("tiang2", $temp[5])
-					->where("deleted", 0);
+				$this->db->select("p.*,jp.meter_per_month")
+					->from("pohon as p")
+					->join("jenis_pohon as jp", "p.id_jenis_pohon = jp.id", "left")
+					->where("p.tiang1", $temp[4])
+					->where("p.tiang2", $temp[5])
+					->where("p.deleted", 0);
 
 				$result_pohon = $this->db->get()->result_array();
 
 				if (count($result_pohon) == 0) {
 					continue;
+				} else {
+					$result_pohon = $result_pohon[0];
 				}
 
-				if(empty($temp[8])){
+				if (empty($temp[8])) {
 					continue;
 				}
-				
+
 				$dateTime = DateTime::createFromFormat('d/m/Y', $temp[8]);
 				$tanggal_eksekusi = $dateTime->format('Y-m-d');
 
 				$data = [];
-				$data['id_pohon'] = $result_pohon[0]['id'];
+				$data['id_pohon'] = $result_pohon['id'];
 				$data['tanggal_eksekusi'] = $tanggal_eksekusi;
 				$data['metode_rintis'] = strtolower($temp[6]);
 				$data['bentangan_pohon'] = $temp[7];
-				$data['eksekusi_selanjutnya'] = $this->get_eksekusi_selanjutnya($temp);
+				$data['eksekusi_selanjutnya'] = $this->get_eksekusi_selanjutnya($temp, $result_pohon);
 
-				//check data if exist
+				//check data if exist on eksekusi
 				$this->db->select("e.*")
 					->from("eksekusi e")
 					->join("pohon p", "p.id = e.id_pohon", "left")
@@ -179,6 +182,20 @@ class Bulk_import extends CI_Controller
 					$this->crud->update_data($data, 'eksekusi');
 				} else {
 					$this->crud->tambah_data($data, 'eksekusi');
+				}
+
+				//update tinggi pohon
+				if (intval($result_pohon['tinggi']) > 0) {
+					$data = [];
+					$data['ID'] = $result_pohon['id'];
+
+					if (strtolower($temp[6]) == 'rabas-rabas') {
+						$data['tinggi'] = floatval($result_pohon['tinggi']) - 3;
+					} else {
+						$data['tinggi'] = 0;
+					}
+
+					$this->crud->update_data($data, 'pohon');
 				}
 			}
 			fclose($handle);
@@ -279,8 +296,24 @@ class Bulk_import extends CI_Controller
 		return $position;
 	}
 
-	private function get_eksekusi_selanjutnya($data)
+	private function get_eksekusi_selanjutnya($eksekusi, $pohon)
 	{
-		return "2022-12-14 00:00:00";
+		if(empty($pohon['meter_per_month'])){
+			return '';
+		}
+		
+		$tanggal_eksekusi = DateTime::createFromFormat('d/m/Y', $eksekusi[8]);
+
+		$c = 1;
+		$laju_pertumbuhan = floatval($pohon['meter_per_month']);
+		$limit_tinggi = get_tinggi_pohon_limit();
+
+		while(($c*$laju_pertumbuhan) < $limit_tinggi)
+		{
+			$c++;
+		}
+
+		$tanggal_eksekusi->modify("+$c months");
+		return $tanggal_eksekusi->format('Y-m-d');
 	}
 }

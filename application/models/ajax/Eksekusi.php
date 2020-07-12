@@ -69,9 +69,9 @@ class Eksekusi extends CI_Model
             $t[] = $val['nama_jenis_pohon'];
             $t[] = "Tiang 1: {$val['tiang1']}<br> Tiang 2: {$val['tiang2']}";
             $t[] = $val['metode_rintis'];
-            $t[] = ($val['bentangan_pohon'] == 0) ? "" : $val['bentangan_pohon'] . " M";
-            $t[] = date("d-m-Y", strtotime($val['tanggal_eksekusi']));
-            $t[] = date("d-m-Y", strtotime($val['eksekusi_selanjutnya']));
+            $t[] = ($val['bentangan_pohon'] == 0) ? "-" : $val['bentangan_pohon'] . " M";
+            $t[] = ($val['tanggal_eksekusi'] == "0000-00-00 00:00:00") ? "-" : date("d-m-Y", strtotime($val['tanggal_eksekusi']));
+            $t[] = ($val['eksekusi_selanjutnya'] == "0000-00-00 00:00:00") ? "-" : date("d-m-Y", strtotime($val['eksekusi_selanjutnya']));
             $t[] = $val['keterangan'];
             $t[] = $button;
             $temp[] = $t;
