@@ -222,7 +222,7 @@ $template->footer_add = "<script src='https://unpkg.com/@google/markerclustererp
 					content += "<a href='images/" + val.image + "' target='_blank'><img style='max-height:250px' src='images/" + val.image + "'/></a>";
 				}
 
-				if (parseFloat(val.tinggi) >= 10) {
+				if (parseFloat(val.tinggi) >= <?= get_tinggi_pohon_limit() ?>) {
 					addPMarker(val.latitude, val.longitude, content, "<?php echo base_url("assets/icons/tree-red.png") ?>");
 				} else {
 					addPMarker(val.latitude, val.longitude, content, '');

@@ -21,10 +21,12 @@ class TreeModel extends CI_Model
 
     public function get_pohon_alert()
     {
+        $limit_pohon = get_tinggi_pohon_limit();
+        
         $this->db->select("*")
             ->from("pohon")
             ->where("deleted", "0")
-            ->where("tinggi >= 10"); //pohon alert selalu diatas atau sama dengan 10 M
+            ->where("tinggi >= $limit_pohon"); //pohon alert selalu diatas atau sama dengan 10 M
 
         return $this->db->get()->result_array();
     }

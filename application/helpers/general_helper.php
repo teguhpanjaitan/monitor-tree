@@ -40,35 +40,11 @@ if (!function_exists('get_display_name'))
 	}
 }
 
-if (!function_exists('fix_time_display'))
+if (!function_exists('get_tinggi_pohon_limit'))
 {
-	function fix_time_display($datetime){
-		$originalDate = $datetime;
-		$newDate = date("d-m-Y H:i", strtotime($originalDate));
-		return $newDate;
-	}
-}
-
-if (!function_exists('romanic_number'))
-{
-	function romanic_number($integer, $upcase = true) 
-	{ 
-		$table = array('M'=>1000, 'CM'=>900, 'D'=>500, 'CD'=>400, 'C'=>100, 'XC'=>90, 'L'=>50, 'XL'=>40, 'X'=>10, 'IX'=>9, 'V'=>5, 'IV'=>4, 'I'=>1); 
-		$return = ''; 
-		while($integer > 0) 
-		{ 
-			foreach($table as $rom=>$arb) 
-			{ 
-				if($integer >= $arb) 
-				{ 
-					$integer -= $arb; 
-					$return .= $rom; 
-					break; 
-				} 
-			} 
-		} 
-
-		return $return; 
+	function get_tinggi_pohon_limit()
+	{
+		return 10;
 	}
 }
 ?>
