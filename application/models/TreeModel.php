@@ -83,8 +83,8 @@ class TreeModel extends CI_Model
             $csv .= '"' . $result['tiang2'] . '";';
             $csv .= '"' . $result['metode_rintis'] . '";';
             $csv .= '"' . $result['bentangan_pohon'] . '";';
-            $csv .= '"' . date("m/d/Y", strtotime($result['tanggal_eksekusi'])) . '";';
-            $csv .= '"' . date("m/d/Y", strtotime($result['eksekusi_selanjutnya'])) . '";';
+            $csv .= '"' . ($result['tanggal_eksekusi'] == "0000-00-00 00:00:00") ? "-" : date("d-m-Y", strtotime($result['tanggal_eksekusi'])) . '";';
+            $csv .= '"' . ($result['eksekusi_selanjutnya'] == "0000-00-00 00:00:00") ? "-" : date("d-m-Y", strtotime($result['eksekusi_selanjutnya'])) . '";';
             $csv .= "\r\n";
         }
 
