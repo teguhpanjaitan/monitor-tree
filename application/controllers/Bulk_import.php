@@ -79,6 +79,7 @@ class Bulk_import extends CI_Controller
 				//check data if exist
 				$this->db->select("*")
 					->from("pohon")
+					->where('tanggal_inspeksi',$tanggal_inspeksi)
 					->where("tiang1", $temp[6])
 					->where("tiang2", $temp[7])
 					->where("deleted", 0);
