@@ -164,8 +164,8 @@ class Bulk_import extends CI_Controller
 				$data['id_pohon'] = $result_pohon['id'];
 				$data['tanggal_eksekusi'] = $tanggal_eksekusi;
 				$data['metode_rintis'] = strtolower($temp[6]);
-				$data['bentangan_pohon'] = $this->get_bentangan($temp[6],$result_pohon['tinggi']);
-				$data['eksekusi_selanjutnya'] = $this->get_eksekusi_selanjutnya($temp, $result_pohon);
+				$data['bentangan_pohon'] = get_bentangan_pohon($temp[6],$result_pohon['tinggi']);
+				$data['eksekusi_selanjutnya'] = get_eksekusi_selanjutnya($temp, $result_pohon);
 
 				//check data if exist on eksekusi
 				$this->db->select("e.*")
@@ -294,36 +294,5 @@ class Bulk_import extends CI_Controller
 		$position['longitude'] = round($position['longitude'], 10);
 
 		return $position;
-	}
-
-	private function get_eksekusi_selanjutnya($eksekusi, $pohon)
-	{
-		if(empty($pohon['meter_per_month'])){
-			return '';
-		}
-		
-		$tanggal_eksekusi = DateTime::createFromFormat('d/m/Y', $eksekusi[8]);
-
-		$c = 1;
-		$laju_pertumbuhan = floatval($pohon['meter_per_month']);
-		$limit_tinggi = get_tinggi_pohon_limit();
-
-		while(($c*$laju_pertumbuhan) < $limit_tinggi)
-		{
-			$c++;
-		}
-
-		$tanggal_eksekusi->modify("+$c months");
-		return $tanggal_eksekusi->format('Y-m-d');
-	}
-
-	private function get_bentangan($metode_rintis,$tinggi)
-	{
-		if(strtolower($metode_rintis) == 'rabas-rabas'){
-			return 3;
-		}
-		else{
-			return $tinggi;
-		}
 	}
 }
