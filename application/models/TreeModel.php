@@ -102,19 +102,18 @@ class TreeModel extends CI_Model
         $pohons = $this->db->get()->result_array();
 
         foreach ($pohons as $pohon) {
-            $this->db->select("id,tanggal_eksekusi")
+            $this->db->select("id,metode_rintis,tanggal_eksekusi")
                 ->from("eksekusi")
-                ->where("id_pohon",$pohon['id'])
+                ->where("id_pohon", $pohon['id'])
                 ->where("deleted", "0")
                 ->order_by('tanggal_eksekusi', 'DESC');
 
             $eksekusi = $this->db->get()->result_array();
 
-            if(count($eksekusi) == 0){
+            if (count($eksekusi) == 0) {
                 continue;
-            }
-            else{
-                $eksekusi_selanjutnya = get_eksekusi_selanjutnya($eksekusi[0]['tanggal_eksekusi'],$pohon['laju_pertumbuhan']);
+            } else {
+                $eksekusi_selanjutnya = get_eksekusi_selanjutnya($eksekusi[0]['tanggal_eksekusi'], $pohon['laju_pertumbuhan'], $pohon['tinggi'], $eksekusi[0]['metode_rintis']);
 
                 $data = [];
                 $data['eksekusi_selanjutnya'] = $eksekusi_selanjutnya;

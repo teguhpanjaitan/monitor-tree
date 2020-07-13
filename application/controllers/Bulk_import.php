@@ -77,12 +77,13 @@ class Bulk_import extends CI_Controller
 				$data['tiang2'] = $temp[7];
 
 				//check data if exist
-				$this->db->select("*")
-					->from("pohon")
-					->where('tanggal_inspeksi',$tanggal_inspeksi)
-					->where("tiang1", $temp[6])
-					->where("tiang2", $temp[7])
-					->where("deleted", 0);
+				$this->db->select("p.*")
+					->from("pohon p")
+					->join("inspeksi as i", "i.id_pohon = p.id", "left")
+					->where('i.tanggal_inspeksi', $tanggal_inspeksi)
+					->where("p.tiang1", $temp[6])
+					->where("p.tiang2", $temp[7])
+					->where("p.deleted", 0);
 				$result_pohon = $this->db->get()->result_array();
 
 				$id_pohon = 0;
@@ -161,12 +162,20 @@ class Bulk_import extends CI_Controller
 				$dateTime = DateTime::createFromFormat('d/m/Y', $temp[8]);
 				$tanggal_eksekusi = $dateTime->format('Y-m-d');
 
+				//get tinggi pohon
+				$tinggi_pohon = 0;
+				if (floatval($result_pohon['tinggi']) > 0) {
+					if (strtolower($temp[6]) == 'rabas-rabas') {
+						$tinggi_pohon = floatval($result_pohon['tinggi']) - 3;
+					}
+				}
+
 				$data = [];
 				$data['id_pohon'] = $result_pohon['id'];
 				$data['tanggal_eksekusi'] = $tanggal_eksekusi;
 				$data['metode_rintis'] = strtolower($temp[6]);
-				$data['bentangan_pohon'] = get_bentangan_pohon($temp[6],$result_pohon['tinggi']);
-				$data['eksekusi_selanjutnya'] = get_eksekusi_selanjutnya($temp[8], $result_pohon['meter_per_month']);
+				$data['bentangan_pohon'] = get_bentangan_pohon($temp[6], $result_pohon['tinggi']);
+				$data['eksekusi_selanjutnya'] = get_eksekusi_selanjutnya($temp[8], $result_pohon['meter_per_month'], $tinggi_pohon, $temp[6]);
 
 				//check data if exist on eksekusi
 				$this->db->select("e.*")
@@ -186,18 +195,10 @@ class Bulk_import extends CI_Controller
 				}
 
 				//update tinggi pohon
-				if (intval($result_pohon['tinggi']) > 0) {
-					$data = [];
-					$data['ID'] = $result_pohon['id'];
-
-					if (strtolower($temp[6]) == 'rabas-rabas') {
-						$data['tinggi'] = floatval($result_pohon['tinggi']) - 3;
-					} else {
-						$data['tinggi'] = 0;
-					}
-
-					$this->crud->update_data($data, 'pohon');
-				}
+				$data = [];
+				$data['tinggi'] = $tinggi_pohon;
+				$data['ID'] = $result_pohon['id'];
+				$this->crud->update_data($data, 'pohon');
 			}
 			fclose($handle);
 		} else {

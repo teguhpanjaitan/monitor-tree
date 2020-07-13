@@ -19,7 +19,7 @@ if (!function_exists('get_bentangan_pohon')) {
 }
 
 if (!function_exists('get_eksekusi_selanjutnya')) {
-	function get_eksekusi_selanjutnya($tanggal_eksekusi, $laju_pertumbuhan)
+	function get_eksekusi_selanjutnya($tanggal_eksekusi, $laju_pertumbuhan, $tinggi = 0, $metode_rintis = '')
 	{
 		if (empty($laju_pertumbuhan)) {
 			return '';
@@ -33,15 +33,28 @@ if (!function_exists('get_eksekusi_selanjutnya')) {
 			return '';
 		}
 
-		$c = 1;
-		$laju_pertumbuhan = floatval($laju_pertumbuhan);
-		$limit_tinggi = get_tinggi_pohon_limit();
+		if (strtolower($metode_rintis) == 'rabas-rabas') {
+			if (intval($laju_pertumbuhan) >= 3) {
+				$tanggal_eksekusi->modify("+1 month");
+			} else {
+				$bulan = 3/intval($laju_pertumbuhan);
+				$bulan = round($bulan,1);
+				$tanggal_eksekusi->modify("+$bulan month");
+			}
+			
+			return $tanggal_eksekusi->format('Y-m-d');
+		} else {
+			$tinggi = floatval($tinggi);
+			$c = 1;
+			$laju_pertumbuhan = floatval($laju_pertumbuhan);
+			$limit_tinggi = get_tinggi_pohon_limit();
 
-		while (($c * $laju_pertumbuhan) < $limit_tinggi) {
-			$c++;
+			while ((($c * $laju_pertumbuhan) + $tinggi) < $limit_tinggi) {
+				$c++;
+			}
+
+			$tanggal_eksekusi->modify("+$c months");
+			return $tanggal_eksekusi->format('Y-m-d');
 		}
-
-		$tanggal_eksekusi->modify("+$c months");
-		return $tanggal_eksekusi->format('Y-m-d');
 	}
 }
