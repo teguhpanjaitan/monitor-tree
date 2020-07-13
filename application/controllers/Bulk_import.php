@@ -164,7 +164,7 @@ class Bulk_import extends CI_Controller
 				$data['id_pohon'] = $result_pohon['id'];
 				$data['tanggal_eksekusi'] = $tanggal_eksekusi;
 				$data['metode_rintis'] = strtolower($temp[6]);
-				$data['bentangan_pohon'] = $temp[7];
+				$data['bentangan_pohon'] = $this->get_bentangan($temp[6],$result_pohon['tinggi']);
 				$data['eksekusi_selanjutnya'] = $this->get_eksekusi_selanjutnya($temp, $result_pohon);
 
 				//check data if exist on eksekusi
@@ -315,5 +315,15 @@ class Bulk_import extends CI_Controller
 
 		$tanggal_eksekusi->modify("+$c months");
 		return $tanggal_eksekusi->format('Y-m-d');
+	}
+
+	private function get_bentangan($metode_rintis,$tinggi)
+	{
+		if(strtolower($metode_rintis) == 'rabas-rabas'){
+			return 3;
+		}
+		else{
+			return $tinggi;
+		}
 	}
 }
