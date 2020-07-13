@@ -165,7 +165,7 @@ class Bulk_import extends CI_Controller
 				$data['tanggal_eksekusi'] = $tanggal_eksekusi;
 				$data['metode_rintis'] = strtolower($temp[6]);
 				$data['bentangan_pohon'] = get_bentangan_pohon($temp[6],$result_pohon['tinggi']);
-				$data['eksekusi_selanjutnya'] = get_eksekusi_selanjutnya($temp, $result_pohon);
+				$data['eksekusi_selanjutnya'] = get_eksekusi_selanjutnya($temp[8], $result_pohon['meter_per_month']);
 
 				//check data if exist on eksekusi
 				$this->db->select("e.*")

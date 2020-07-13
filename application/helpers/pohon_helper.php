@@ -19,16 +19,22 @@ if (!function_exists('get_bentangan_pohon')) {
 }
 
 if (!function_exists('get_eksekusi_selanjutnya')) {
-	function get_eksekusi_selanjutnya($eksekusi, $pohon)
+	function get_eksekusi_selanjutnya($tanggal_eksekusi, $laju_pertumbuhan)
 	{
-		if (empty($pohon['meter_per_month'])) {
+		if (empty($laju_pertumbuhan)) {
 			return '';
 		}
 
-		$tanggal_eksekusi = DateTime::createFromFormat('d/m/Y', $eksekusi[8]);
+		if (strpos($tanggal_eksekusi, '/') !== false) {
+			$tanggal_eksekusi = DateTime::createFromFormat('d/m/Y', $tanggal_eksekusi);
+		} elseif (strpos($tanggal_eksekusi, '-') !== false) {
+			$tanggal_eksekusi = DateTime::createFromFormat('Y-m-d H:i:s', $tanggal_eksekusi);
+		} else {
+			return '';
+		}
 
 		$c = 1;
-		$laju_pertumbuhan = floatval($pohon['meter_per_month']);
+		$laju_pertumbuhan = floatval($laju_pertumbuhan);
 		$limit_tinggi = get_tinggi_pohon_limit();
 
 		while (($c * $laju_pertumbuhan) < $limit_tinggi) {
