@@ -7,6 +7,7 @@ class Jenis_pohon extends CI_Controller {
         parent::__construct();
 		$this->load->model("crud");
 		$this->load->model("global_model","gm");
+		$this->load->model("treeModel", "tm");
     }
 	
 	public function index()
@@ -33,6 +34,7 @@ class Jenis_pohon extends CI_Controller {
 			unset($post['table']);
 			$post['name'] = strtolower($post['name']);
 			$this->crud->update_data($post,$table);
+			$this->tm->recalculate_pohon_on_laju_tumbuh_changed($post['ID']);
 		}
 		else if($act == 'delete')
 		{

@@ -8,6 +8,7 @@ class TreeModel extends CI_Model
     {
         parent::__construct();
         $this->load_all_tiangs();
+        $this->load->model("crud");
     }
 
     public function get_jenis()
@@ -22,7 +23,7 @@ class TreeModel extends CI_Model
     public function get_pohon_alert()
     {
         $limit_pohon = get_tinggi_pohon_limit();
-        
+
         $this->db->select("*")
             ->from("pohon")
             ->where("deleted", "0")
@@ -91,23 +92,55 @@ class TreeModel extends CI_Model
         return $csv;
     }
 
-    private function load_all_tiangs()
-	{
-		$file = fopen("tiang.csv", "r");
-		fgetcsv($file); //ignore first line
+    public function recalculate_pohon_on_laju_tumbuh_changed($id_jenis_pohon = 0)
+    {
+        $this->db->select("p.*,jp.meter_per_month as laju_pertumbuhan")
+            ->from("pohon p")
+            ->join("jenis_pohon as jp", "jp.id = p.id_jenis_pohon", "left")
+            ->where("p.id_jenis_pohon", $id_jenis_pohon)
+            ->where("p.deleted", "0");
+        $pohons = $this->db->get()->result_array();
 
-		$this->tiangs = [];
-		while (!feof($file)) {
+        foreach ($pohons as $pohon) {
+            $this->db->select("id,tanggal_eksekusi")
+                ->from("eksekusi")
+                ->where("id_pohon",$pohon['id'])
+                ->where("deleted", "0")
+                ->order_by('tanggal_eksekusi', 'DESC');
+
+            $eksekusi = $this->db->get()->result_array();
+
+            if(count($eksekusi) == 0){
+                continue;
+            }
+            else{
+                $eksekusi_selanjutnya = get_eksekusi_selanjutnya($eksekusi[0]['tanggal_eksekusi'],$pohon['laju_pertumbuhan']);
+
+                $data = [];
+                $data['eksekusi_selanjutnya'] = $eksekusi_selanjutnya;
+                $data['ID'] = $eksekusi[0]['id'];
+                $this->crud->update_data($data, 'eksekusi');
+            }
+        }
+    }
+
+    private function load_all_tiangs()
+    {
+        $file = fopen("tiang.csv", "r");
+        fgetcsv($file); //ignore first line
+
+        $this->tiangs = [];
+        while (!feof($file)) {
             $data = fgetcsv($file, 0, ';');
 
-			$this->tiangs[] = $data;
-		}
+            $this->tiangs[] = $data;
+        }
     }
 
     private function get_tiang_alamat($no_tiang)
     {
-        foreach($this->tiangs as $tiang){
-            if($no_tiang == $tiang[0]){
+        foreach ($this->tiangs as $tiang) {
+            if ($no_tiang == $tiang[0]) {
                 return $tiang[2];
             }
         }
@@ -117,24 +150,24 @@ class TreeModel extends CI_Model
 
     private function get_kode_tiang($no_tiang)
     {
-        foreach($this->tiangs as $tiang){
-            if($no_tiang == $tiang[0]){
+        foreach ($this->tiangs as $tiang) {
+            if ($no_tiang == $tiang[0]) {
                 return $tiang[3];
             }
         }
 
         return "";
     }
-    
-    private function get_penyulang($no_tiang){
+
+    private function get_penyulang($no_tiang)
+    {
         $kode_tiang = $this->get_kode_tiang($no_tiang);
         $kode_tiang = str_replace("TIANG ", "", $kode_tiang);
         $kode_tiang = explode("-", $kode_tiang);
 
-        if(isset($kode_tiang[0])){
+        if (isset($kode_tiang[0])) {
             return $kode_tiang[0];
-        }
-        else{
+        } else {
             return "";
         }
     }
