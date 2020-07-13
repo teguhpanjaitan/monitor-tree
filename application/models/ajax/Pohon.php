@@ -37,7 +37,9 @@ class Pohon extends CI_Model
 
         if (!empty($search['value'])) {
             $this->db->where("j.name LIKE '%$search[value]%'")
-                ->or_where("p.segmen LIKE '%$search[value]%'");
+                ->or_where("p.segmen LIKE '%$search[value]%'")
+                ->or_where("p.tiang1 LIKE '%$search[value]%'")
+                ->or_where("p.tiang2 LIKE '%$search[value]%'");
         }
 
         $res = $this->db->get()->result_array();
@@ -49,7 +51,9 @@ class Pohon extends CI_Model
 
         if (!empty($search['value'])) {
             $this->db->where("j.name LIKE '%$search[value]%'")
-                ->or_where("p.segmen LIKE '%$search[value]%'");
+                ->or_where("p.segmen LIKE '%$search[value]%'")
+                ->or_where("p.tiang1 LIKE '%$search[value]%'")
+                ->or_where("p.tiang2 LIKE '%$search[value]%'");
         }
 
         $tot = $this->db->get()->result_array();
