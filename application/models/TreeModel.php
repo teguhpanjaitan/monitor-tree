@@ -123,6 +123,17 @@ class TreeModel extends CI_Model
         }
     }
 
+    public function get_pohon_from_inspeksi($id_inspeksi = 0)
+    {
+        $this->db->select("p.*")
+            ->from("inspeksi i")
+            ->join("pohon p", "p.id = i.id_pohon", "left")
+            ->where("i.id", $id_inspeksi)
+            ->where("i.deleted", "0");
+        $query = $this->db->get();
+        return $query->first_row();
+    }
+
     private function load_all_tiangs()
     {
         $file = fopen("tiang.csv", "r");

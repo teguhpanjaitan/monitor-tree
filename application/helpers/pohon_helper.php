@@ -24,6 +24,7 @@ if (!function_exists('get_eksekusi_selanjutnya')) {
 		if (empty($laju_pertumbuhan)) {
 			return '';
 		}
+		$laju_pertumbuhan = floatval($laju_pertumbuhan);
 
 		if (strpos($tanggal_eksekusi, '/') !== false) {
 			$tanggal_eksekusi = DateTime::createFromFormat('d/m/Y', $tanggal_eksekusi);
@@ -34,19 +35,19 @@ if (!function_exists('get_eksekusi_selanjutnya')) {
 		}
 
 		if (strtolower($metode_rintis) == 'rabas-rabas') {
-			if (intval($laju_pertumbuhan) >= 3) {
+			if ($laju_pertumbuhan >= 3) {
 				$tanggal_eksekusi->modify("+1 month");
 			} else {
-				$bulan = 3/intval($laju_pertumbuhan);
-				$bulan = round($bulan,1);
-				$tanggal_eksekusi->modify("+$bulan month");
+				$bulan = 3 / $laju_pertumbuhan;
+				$bulan = round($bulan, 1);
+				$days = moth_to_days($bulan);
+				$tanggal_eksekusi->modify("+$days days");
 			}
-			
+
 			return $tanggal_eksekusi->format('Y-m-d');
 		} else {
 			$tinggi = floatval($tinggi);
 			$c = 1;
-			$laju_pertumbuhan = floatval($laju_pertumbuhan);
 			$limit_tinggi = get_tinggi_pohon_limit();
 
 			while ((($c * $laju_pertumbuhan) + $tinggi) < $limit_tinggi) {
@@ -56,5 +57,13 @@ if (!function_exists('get_eksekusi_selanjutnya')) {
 			$tanggal_eksekusi->modify("+$c months");
 			return $tanggal_eksekusi->format('Y-m-d');
 		}
+	}
+}
+
+if (!function_exists('moth_to_days')) {
+	function moth_to_days($month)
+	{
+		$days = $month * 30;
+		return floor($days);
 	}
 }
