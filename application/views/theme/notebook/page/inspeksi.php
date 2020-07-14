@@ -270,11 +270,10 @@ jQuery('#satker').dataTable({
 	function edit(id) {
 		toggle_edit();
 		$.ajax({
-			url: '<?php echo base_url("ajax/act/get_items") ?>',
+			url: '<?php echo base_url("ajax/act/get_inspeksi") ?>',
 			dataType: 'json',
 			data: {
-				'id': id,
-				'table': 'inspeksi'
+				'id': id
 			}
 		}).done(function(result) {
 			$("#edit_id").val(id);
