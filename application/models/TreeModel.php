@@ -76,6 +76,9 @@ class TreeModel extends CI_Model
 
         $csv = '"ID/No";"Jenis Pohon";"Penyulang";"Alamat";"No Tiang 1";"No Tiang 2";"Metode Rintis";"Bentangan Pohon (M)";"Eksekusi Terakhir";"Eksekusi Selanjutnya"' . "\r\n";
         foreach ($results as $result) {
+            $tanggal_eksekusi = (strpos($result['tanggal_eksekusi'], '0000') !== false) ? "-" : date("d-m-Y", strtotime($result['tanggal_eksekusi']));
+            $eksekusi_selanjutnya = (strpos($result['eksekusi_selanjutnya'], '0000') !== false) ? "-" : date("d-m-Y", strtotime($result['eksekusi_selanjutnya']));
+
             $csv .= '"' . $result['id'] . '";';
             $csv .= '"' . $result['nama_jenis_pohon'] . '";';
             $csv .= '"' . $this->get_penyulang($result['tiang1']) . '";';
@@ -84,8 +87,8 @@ class TreeModel extends CI_Model
             $csv .= '"' . $result['tiang2'] . '";';
             $csv .= '"' . $result['metode_rintis'] . '";';
             $csv .= '"' . $result['bentangan_pohon'] . '";';
-            $csv .= '"' . ($result['tanggal_eksekusi'] == "0000-00-00 00:00:00") ? "-" : date("d-m-Y", strtotime($result['tanggal_eksekusi'])) . '";';
-            $csv .= '"' . ($result['eksekusi_selanjutnya'] == "0000-00-00 00:00:00") ? "-" : date("d-m-Y", strtotime($result['eksekusi_selanjutnya'])) . '";';
+            $csv .= '"' . $tanggal_eksekusi . '";';
+            $csv .= '"' . $eksekusi_selanjutnya . '";';
             $csv .= "\r\n";
         }
 
